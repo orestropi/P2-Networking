@@ -1,12 +1,7 @@
-/**********************************************************************
-* file:   testpcap2.c
-* date:   2001-Mar-14 12:14:19 AM 
-* Author: Martin Casado
-* Last Modified:2001-Mar-14 12:14:11 AM
-*
-* Description: Q&D proggy to demonstrate the use of pcap_loop
-*
-**********************************************************************/
+
+//Part of code from Martin Casado
+
+
 
 #include <pcap.h>
 #include <stdio.h>
