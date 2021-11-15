@@ -46,7 +46,7 @@ int main(int argc,char **argv)
     /* open device for reading */
     //descr = pcap_open_live(dev,BUFSIZ,0,-1,errbuf);
     //we want to open, fro p2, offline instead!
-    descr = pcap_open_offline("project2-dns.pcap",errbuf);
+    descr = pcap_open_offline("project2-http.pcap",errbuf);
     if(descr == NULL)
     { printf("pcap_open_offline(): %s\n",errbuf); exit(1); }
 
