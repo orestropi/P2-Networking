@@ -21,11 +21,8 @@ void my_callback(u_char *useless,const struct pcap_pkthdr* pkthdr,const u_char*
         packet)
 {
     static int count = 1;
-    fprintf(stdout,"%d, ",count);
-    if(count == 4)
-        fprintf(stdout,"Come on baby sayyy you love me!!! ");
-    if(count == 7)
-        fprintf(stdout,"Tiiimmmeesss!! ");
+    //fprintf(stdout,"%d, ",count);
+    fprintf(stdout,"Hello World: %d, ",count);
     fflush(stdout);
     count++;
 }
