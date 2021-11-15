@@ -1,8 +1,6 @@
 
 //Part of code from Martin Casado
 
-
-
 #include <pcap.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -51,8 +49,9 @@ int main(int argc,char **argv)
     /* open device for reading */
     //descr = pcap_open_live(dev,BUFSIZ,0,-1,errbuf);
     //we want to open, fro p2, offline instead!
+    descr = pcap_open_offline("project2-dns.pcap",errbuf);
     if(descr == NULL)
-    { printf("pcap_open_live(): %s\n",errbuf); exit(1); }
+    { printf("pcap_open_offline(): %s\n",errbuf); exit(1); }
 
     /* allright here we call pcap_loop(..) and pass in our callback function */
     /* int pcap_loop(pcap_t *p, int cnt, pcap_handler callback, u_char *user)*/
