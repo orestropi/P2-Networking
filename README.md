@@ -10,7 +10,7 @@ run make all, in terminal at project fie location
 
 then run ./wireview <Paramater 1: should be 1 of the four files to print out hello world for every packet>
 
-make clean will delete all executable files
+running make clean, will delete all executable files
 
 Also FYI there is a limit of 10000 packets that the pogram can process
 
