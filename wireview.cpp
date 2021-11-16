@@ -46,14 +46,14 @@ int main(int argc,char **argv)
     /* open device for reading */
     //descr = pcap_open_live(dev,BUFSIZ,0,-1,errbuf);
     //we want to open, fro p2, offline instead!
-    descr = pcap_open_offline(argv[2],errbuf);
+    descr = pcap_open_offline(argv[1],errbuf);
     if(descr == NULL)
     { printf("pcap_open_offline(): %s\n",errbuf); exit(1); }
 
     /* allright here we call pcap_loop(..) and pass in our callback function */
     /* int pcap_loop(pcap_t *p, int cnt, pcap_handler callback, u_char *user)*/
     /* If you are wondering what the user argument is all about, so am I!!   */
-    pcap_loop(descr,atoi(argv[1]),my_callback,NULL);
+    pcap_loop(descr,10000,my_callback,NULL);
 
     fprintf(stdout,"\nDone processing packets... wheew!\n");
     return 0;
