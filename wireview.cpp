@@ -79,7 +79,7 @@ int main(int argc,char **argv)
     time_t elapsedSec = rtimeLast - rtime;
     time_t elapsedMSec = rtimemsLast - rtimems;
     fprintf(stdout,"Time for Packets Processed: %d, ",elapsedSec);
-    fprintf(stdout,"Time for Packets Processed: %d, ",elapsedSec + ((float)elapsedMSec/1000000));
+    fprintf(stdout,"Time for Packets Processed: %d, ",(float)elapsedSec + ((float)elapsedMSec/1000000));
     fprintf(stdout,"Total Packets Processed: %d, ",count);
     fprintf(stdout,"\nDone processing packets... wheew!\n");
     return 0;
