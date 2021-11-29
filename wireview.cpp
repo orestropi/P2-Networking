@@ -59,7 +59,22 @@ int main(int argc,char **argv)
 
      fprintf(stdout,"Total Packets Processed: %d, ",count);
     fprintf(stdout,"\nDone processing packets... wheew!\n");
+    //Ethernet parsing
+    //loop through all packets. pointer arthmetic to parse
+    for(int i=0; i<count; i++){
+        //*packet + 8 for destination address
+            //If unique add to list
+        //result + 6 for source address
+            //If unique add to list
+        //result + 6 for length
+        //result + 2 for data
+        //parse data for length of length
+
+    }
+    
     return 0;
 }
+
+
 
 
