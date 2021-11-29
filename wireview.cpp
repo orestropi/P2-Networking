@@ -9,7 +9,7 @@
 #include <netinet/in.h>
 #include <arpa/inet.h>
 #include <netinet/if_ether.h>
-
+#include <time.h> 
 
 
 //Code shown in class on friday
@@ -25,6 +25,13 @@ void my_callback(u_char *useless,const struct pcap_pkthdr* pkthdr,const u_char*
     //fprintf(stdout,"%d, ",count);
     if(count == 0){
         fprintf(stdout,"Time Stamp: %d, ",pkthdr->ts);
+        time_t rtime = (time_t)pkthdr->ts.tv_sec;
+        struct tm * timeinfo;
+        time (&rtime);
+        timeinfo = localtime (&rtime);
+        fprintf (stdout,"Current local time and date: %s", asctime(timeinfo));        
+  //fprintf(stdout,"Time Stamp: %d, ",gmtime(time));
+
     }
     count++;
     fprintf(stdout,"Hello World: %d, ",count);
