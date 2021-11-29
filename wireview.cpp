@@ -27,7 +27,7 @@ void my_callback(u_char *useless,const struct pcap_pkthdr* pkthdr,const u_char*
         fprintf(stdout,"Time Stamp: %d, ",pkthdr->ts);
         time_t rtime = (time_t)pkthdr->ts.tv_sec;
         struct tm rstime;
-    char       buf[80];
+    char       buf[100];
     // Format time, "ddd yyyy-mm-dd hh:mm:ss zzz"
     rstime = *localtime(&rtime);
     strftime(buf, sizeof(buf), "%a %Y-%m-%d %H:%M:%S %Z", &rstime);
