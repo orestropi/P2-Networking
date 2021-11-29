@@ -26,10 +26,12 @@ void my_callback(u_char *useless,const struct pcap_pkthdr* pkthdr,const u_char*
     if(count == 0){
         fprintf(stdout,"Time Stamp: %d, ",pkthdr->ts);
         time_t rtime = (time_t)pkthdr->ts.tv_sec;
-        struct tm * timeinfo;
-        time (&rtime);
-        timeinfo = gmtime (&rtime);
-        fprintf (stdout,"Current local time and date: %s", asctime(timeinfo));        
+        struct tm rstime;
+    char       buf[80];
+    // Format time, "ddd yyyy-mm-dd hh:mm:ss zzz"
+    rstime = *localtime(&rtime);
+    strftime(buf, sizeof(buf), "%a %Y-%m-%d %H:%M:%S %Z", &ts);
+    printf("%s\n", buf);       
   //fprintf(stdout,"Time Stamp: %d, ",gmtime(time));
 
     }
