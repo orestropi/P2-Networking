@@ -23,6 +23,9 @@ void my_callback(u_char *useless,const struct pcap_pkthdr* pkthdr,const u_char*
         packet)
 {
     //fprintf(stdout,"%d, ",count);
+    if(count == 0){
+        fprintf(stdout,"Time Stamp: %d, ",pkthdr->ts);
+    }
     count++;
     fprintf(stdout,"Hello World: %d, ",count);
     fflush(stdout);
