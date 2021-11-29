@@ -13,6 +13,8 @@
 
 
 //Code shown in class on friday
+    static int count = 0;
+
 //Push test
 
 /* callback function that is passed to pcap_loop(..) and called each time 
@@ -20,11 +22,11 @@
 void my_callback(u_char *useless,const struct pcap_pkthdr* pkthdr,const u_char*
         packet)
 {
-    static int count = 1;
     //fprintf(stdout,"%d, ",count);
+    count++;
     fprintf(stdout,"Hello World: %d, ",count);
     fflush(stdout);
-    count++;
+    
 }
 
 int main(int argc,char **argv)
@@ -55,6 +57,7 @@ int main(int argc,char **argv)
     /* If you are wondering what the user argument is all about, so am I!!   */
     pcap_loop(descr,10000,my_callback,NULL);
 
+     fprintf(stdout,"Total Packets Processed: %d, ",count);
     fprintf(stdout,"\nDone processing packets... wheew!\n");
     return 0;
 }
