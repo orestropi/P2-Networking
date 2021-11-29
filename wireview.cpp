@@ -76,8 +76,8 @@ int main(int argc,char **argv)
     /* If you are wondering what the user argument is all about, so am I!!   */
     pcap_loop(descr,10000,my_callback,NULL);
 
-    double elapsedSec = rtimeLast - rtime;
-    double elapsedMSec = rtimemsLast - rtimems;    
+    time_t elapsedSec = rtimeLast - rtime;
+    time_t elapsedMSec = rtimemsLast - rtimems;    
 
     fprintf(stdout,"Time for Packets Processed: %d, ",elapsedSec);
     fprintf(stdout,"Time for Packets Processed: %d, ",elapsedMSec);
