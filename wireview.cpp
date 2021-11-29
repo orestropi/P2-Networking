@@ -13,7 +13,7 @@
 
 
 //Code shown in class on friday
-    static int count = 1;
+    static int count = 0;
 
 
 /* callback function that is passed to pcap_loop(..) and called each time 
@@ -22,9 +22,10 @@ void my_callback(u_char *useless,const struct pcap_pkthdr* pkthdr,const u_char*
         packet)
 {
     //fprintf(stdout,"%d, ",count);
+    count++;
     fprintf(stdout,"Hello World: %d, ",count);
     fflush(stdout);
-    count++;
+    
 }
 
 int main(int argc,char **argv)
