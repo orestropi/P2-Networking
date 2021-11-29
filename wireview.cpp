@@ -30,7 +30,7 @@ void my_callback(u_char *useless,const struct pcap_pkthdr* pkthdr,const u_char*
     char       buf[80];
     // Format time, "ddd yyyy-mm-dd hh:mm:ss zzz"
     rstime = *localtime(&rtime);
-    strftime(buf, sizeof(buf), "%a %Y-%m-%d %H:%M:%S %Z", &ts);
+    strftime(buf, sizeof(buf), "%a %Y-%m-%d %H:%M:%S %Z", &rstime);
     printf("%s\n", buf);       
   //fprintf(stdout,"Time Stamp: %d, ",gmtime(time));
 
