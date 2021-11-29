@@ -28,7 +28,7 @@ void my_callback(u_char *useless,const struct pcap_pkthdr* pkthdr,const u_char*
         time_t rtime = (time_t)pkthdr->ts.tv_sec;
         struct tm * timeinfo;
         time (&rtime);
-        timeinfo = localtime (&rtime);
+        timeinfo = gmtime (&rtime);
         fprintf (stdout,"Current local time and date: %s", asctime(timeinfo));        
   //fprintf(stdout,"Time Stamp: %d, ",gmtime(time));
 
