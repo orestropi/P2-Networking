@@ -77,7 +77,11 @@ int main(int argc,char **argv)
     pcap_loop(descr,10000,my_callback,NULL);
 
     time_t elapsedSec = rtimeLast - rtime;
-    suseconds_t elapsedMSec = rtimemsLast - rtimems;    
+    suseconds_t elapsedMSec = rtimemsLast - rtimems;
+    if(elapsedMSec < 0){
+        elapsedSec-=1;
+        elapsedMSec=-elapsedMSec;
+    }    
 
     timeval time_ourval =
     { .tv_sec = elapsedSec, .tv_usec = elapsedMSec };
