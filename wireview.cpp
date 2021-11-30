@@ -87,7 +87,7 @@ int main(int argc,char **argv)
 
     timeval time_ourval =
     { .tv_sec = elapsedSec, .tv_usec = elapsedMSec };
-    printf("Duration of the packet capture in seconds %ld.%06ld\n", time_ourval.tv_sec, time_ourval.tv_usec);
+    printf("Duration of the packet capture in seconds: %ld.%06ld\n", time_ourval.tv_sec, time_ourval.tv_usec);
     //Printing total number of packets
     fprintf(stdout,"Total Packets Processed: %d, ",count);
     fprintf(stdout,"\nDone processing packets... wheew!\n");
