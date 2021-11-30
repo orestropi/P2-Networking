@@ -79,12 +79,12 @@ int main(int argc,char **argv)
     time_t elapsedSec = rtimeLast - rtime;
     suseconds_t elapsedMSec = rtimemsLast - rtimems;    
 
-    double totalTimeElapsedMS = elapsedMSec/1000000.0;
-    double totalTimeElapsedS = totalTimeElapsedMS;
+    timeval time_ourval =
+    { .tv_sec = elapsedSec, .tv_usec = elapsedMSec };
 
     fprintf(stdout,"Time for Packets Processed: seconds: %d, ",elapsedSec);
     fprintf(stdout,"microseconds: %d, ",elapsedMSec);
-    fprintf(stdout,"hiiii: %d, ", totalTimeElapsedMS);
+    printf("%ld.%06ld\n", time_ourval.tv_sec, time_ourval.tv_usec);
     fprintf(stdout,"Total Packets Processed: %d, ",count);
     fprintf(stdout,"\nDone processing packets... wheew!\n");
     return 0;
