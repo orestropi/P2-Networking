@@ -15,9 +15,10 @@
 //Code shown in class on friday
     static int count = 0;
     time_t rtime;
-    time_t rtimems;
-    time_t rtimeLast;
-    time_t rtimemsLast;
+    double rtimeD;
+    double rtimems;
+    double rtimeLast;
+    double rtimemsLast;
 
 //Push test
 
@@ -30,7 +31,8 @@ void my_callback(u_char *useless,const struct pcap_pkthdr* pkthdr,const u_char*
     if(count == 0){
         fprintf(stdout,"Time Stamp: %d, ",pkthdr->ts.tv_sec);
         rtime = (time_t)pkthdr->ts.tv_sec;
-        rtimems = (time_t)pkthdr->ts.tv_usec;
+        rtimeD = (double)pkthdr->ts.tv_sec;
+        rtimems = (double)pkthdr->ts.tv_usec;
         struct tm rstime;
     char       buf[100];
     // Format time, "ddd yyyy-mm-dd hh:mm:ss zzz"
@@ -40,8 +42,8 @@ void my_callback(u_char *useless,const struct pcap_pkthdr* pkthdr,const u_char*
   //fprintf(stdout,"Time Stamp: %d, ",gmtime(time));
     }
     //get timestamp of every packet so we know which one is last
-    rtimeLast = (time_t)pkthdr->ts.tv_sec;
-    rtimemsLast = (time_t)pkthdr->ts.tv_usec;
+    rtimeLast = (double)pkthdr->ts.tv_sec;
+    rtimemsLast = (double)pkthdr->ts.tv_usec;
     //count packets
     count++;
     fprintf(stdout,"Hello World: %d, ",count);
@@ -76,8 +78,8 @@ int main(int argc,char **argv)
     /* If you are wondering what the user argument is all about, so am I!!   */
     pcap_loop(descr,10000,my_callback,NULL);
 
-    time_t elapsedSec = rtimeLast - rtime;
-    time_t elapsedMSec = rtimemsLast - rtimems;    
+    double elapsedSec = rtimeLast - rtime;
+    double elapsedMSec = rtimemsLast - rtimems;    
 
     fprintf(stdout,"Time for Packets Processed: %d, ",elapsedSec);
     fprintf(stdout,"Time for Packets Processed: %d, ",elapsedMSec);
