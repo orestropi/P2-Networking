@@ -80,7 +80,7 @@ int main(int argc,char **argv)
     suseconds_t elapsedMSec = rtimemsLast - rtimems;
     if(elapsedMSec < 0){
         elapsedSec-=1;
-        elapsedMSec=-elapsedMSec;
+        elapsedMSec=1000000+elapsedMSec;
     }    
 
     timeval time_ourval =
