@@ -16,6 +16,7 @@
 #include <linux/if_ether.h>
 //#include <net/if_ethernet.h>
 #include <netinet/ether.h>
+#include <netinet/ip.h>
 #include <net/if_arp.h>
 #include <arpa/inet.h>
 using namespace std;
@@ -45,14 +46,18 @@ void my_callback(u_char *useless, const struct pcap_pkthdr *pkthdr, const u_char
 {
     //ethernet parsing
      eptr = (struct ether_header *) packet;
-      fprintf(stdout,"ethernet header source: %s"
+      fprintf(stdout,"Ethernet Source: %s"
             ,ether_ntoa((const struct ether_addr *)&eptr->ether_shost));
-      fprintf(stdout," destination: %s "
+      fprintf(stdout,"Ethernet Destination: %s "
             ,ether_ntoa((const struct ether_addr *)&eptr->ether_dhost));
 
              if (ntohs(eptr->ether_type) == ETHERTYPE_IP)
     {
-
+     const struct ip* ip = (struct ip*)(packet + sizeof(struct ether_header));
+     fprintf(stdout,"IP source: %s ",
+                inet_ntoa(ip->ip_src));
+        fprintf(stdout,"IP destintation: %s\n",
+                inet_ntoa(ip->ip_dst));
               fprintf(stdout,"IP source address: IM IP!"
             );
 
