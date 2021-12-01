@@ -118,7 +118,7 @@ void my_callback(u_char *useless, const struct pcap_pkthdr *pkthdr, const u_char
     fflush(stdout);
 /*     packets.insert(std::pair<int, const u_char>(count, *packet));
  */}
-void unique(set<const u_char> list, const u_char address, const char *statement)
+/* void unique(set<const u_char> list, const u_char address, const char *statement)
 {
     auto found = list.find(address);
     if (found != list.end())
@@ -147,8 +147,8 @@ void math(map<int, int> lengths)
     printf("The smallest packet collected was size: ", min);
     printf("The biggest sized packet collected was size: ", max);
     ave /= lengths.size();
-    printf("The average size of the packets collected is: ", ave);
-}
+    printf("The average size of the packets collected is: ", ave); 
+}*/
 
 int main(int argc, char **argv)
 {
