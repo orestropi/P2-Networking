@@ -42,6 +42,29 @@ map<int, int> lens; */
  * a packet is recieved                                                    */
 void my_callback(u_char *useless, const struct pcap_pkthdr *pkthdr, const u_char *packet)
 {
+    //ethernet parsing
+    const u_char *destination_address;
+        const u_char *source_address;
+        int len;
+        char *data;
+        //*packet + 8 for destination address
+        const u_char *cur_address = packet + 8;
+        destination_address = cur_address;
+        printf("destination: " ,destination_address);
+        //If unique add to list
+        //unique(des_adds, *destination_address, "New Destination: ");
+
+        //result + 6 for source address
+        source_address = cur_address + 6;
+        //If unique add to list
+        //unique(src_adds, *source_address, "New Source: ");
+
+        //result + 6 for length
+        cur_address = source_address + 6;
+        len = *cur_address;
+        //lens.insert(std::pair<int, int>(i, len));
+        cur_address = cur_address+len;
+
     //if first packet get timestamp
     if (count == 0)
     {
