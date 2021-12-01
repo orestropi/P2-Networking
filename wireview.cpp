@@ -72,7 +72,7 @@ void my_callback(u_char *useless, const struct pcap_pkthdr *pkthdr, const u_char
     if (ntohs(eptr->ether_type) == ETHERTYPE_ARP)
     {
         //request or reply by looking at op field
-        const u_char *sourceMacAddress, *sourceIPAddress, *targetMacAddress, *targetIPAddress;
+        u_char *sourceMacAddress, *sourceIPAddress, *targetMacAddress, *targetIPAddress;
         struct arphdr *arp_header = (struct arphdr *)packet;
         if (arp_header->ar_op == 1)
         {
