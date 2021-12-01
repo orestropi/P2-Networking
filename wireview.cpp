@@ -10,17 +10,18 @@
 #include <arpa/inet.h>
 #include <netinet/if_ether.h>
 #include <time.h> 
-
+#include <map>
+#include <set>
+using namespace std;
 
     static int count = 0;
     time_t rtime;
     suseconds_t rtimems;
     time_t rtimeLast;
     suseconds_t rtimemsLast;
-#include <map>
-#include <set>
 
-using namespace std;
+
+
 //Code shown in class on friday
 static int count = 0;
 
