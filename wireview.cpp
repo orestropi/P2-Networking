@@ -153,8 +153,9 @@ int main(int argc, char **argv)
     set<const u_char> des_adds;
     set<const u_char> src_adds;
     
-    for (int i = 0; i < count; i++)
+    for (int i = 1; i <=count; i++)
     {
+        packet = &packets.at(count);
         const u_char *destination_address;
         const u_char *source_address;
         double len;
