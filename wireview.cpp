@@ -52,23 +52,17 @@ void my_callback(u_char *useless, const struct pcap_pkthdr *pkthdr, const u_char
 
              if (ntohs(eptr->ether_type) == ETHERTYPE_IP)
     {
-        unsigned int sourceAddress = 0, targetAddress = 0;
-        packet += sizeof(struct ether_addr);
-        struct iphdr *ip_header = (struct iphdr *)packet;
-        sourceAddress = ip_header->saddr;
-        targetAddress = ip_header->daddr;
-              fprintf(stdout,"IP source address: %s"
-            ,sourceAddress);
-        //Check if source or target are unique in a map struct...
-        packet += sizeof(struct iphdr);
-        struct udphdr *udp_hdr = (struct udphdr *)packet;
+
+              fprintf(stdout,"IP source address: IM IP!"
+            );
+
     }
     if (ntohs(eptr->ether_type) == ETHERTYPE_ARP)
     {
         //request or reply by looking at op field
-        u_char *sourceMacAddress, *sourceIPAddress, *targetMacAddress, *targetIPAddress;
+       /* u_char *sourceMacAddress, *sourceIPAddress, *targetMacAddress, *targetIPAddress;
         struct arphdr *arp_header = (struct arphdr *)packet;
-        /* if (arp_header->ar_op == 1)
+         if (arp_header->ar_op == 1)
         {
             //request 3 fields
             sourceMacAddress = arp_header->ar_hrd;
