@@ -15,6 +15,7 @@
 #include <linux/ip.h>
 #include <linux/if_ether.h>
 //#include <net/if_ethernet.h>
+#include <netinet/ether.h>
 #include <net/if_arp.h>
 #include <arpa/inet.h>
 using namespace std;
@@ -45,11 +46,45 @@ void my_callback(u_char *useless, const struct pcap_pkthdr *pkthdr, const u_char
     //ethernet parsing
      eptr = (struct ether_header *) packet;
       fprintf(stdout,"ethernet header source: %s"
-            ,((const struct ether_addr *)&eptr->ether_shost));
-    fprintf(stdout," destination: %s "
-            ,((const struct ether_addr *)&eptr->ether_dhost));
-        
+            ,ether_ntoa((const struct ether_addr *)&eptr->ether_shost));
+      fprintf(stdout," destination: %s "
+            ,ether_ntoa((const struct ether_addr *)&eptr->ether_dhost));
 
+             if (ntohs(eptr->ether_type) == ETHERTYPE_IP)
+    {
+        __be32 sourceAddress = 0, targetAddress = 0;
+        struct iphdr *ip_header = (struct iphdr *)packet;
+        sourceAddress = ip_header->saddr;
+        targetAddress = ip_header->daddr;
+              fprintf(stdout,"IP source address: %s"
+            ,sourceAddress);
+        //Check if source or target are unique in a map struct...
+        packet += sizeof(struct iphdr);
+        struct udphdr *udp_hdr = (struct udphdr *)packet;
+    }
+    if (ntohs(eptr->ether_type) == ETHERTYPE_ARP)
+    {
+        //request or reply by looking at op field
+        u_char *sourceMacAddress, *sourceIPAddress, *targetMacAddress, *targetIPAddress;
+        struct arphdr *arp_header = (struct arphdr *)packet;
+        /* if (arp_header->ar_op == 1)
+        {
+            //request 3 fields
+            sourceMacAddress = arp_header->ar_hrd;
+            sourceIPAddress = arp_header->ar_sip;
+            targetIPAddress = arp_header->ar_tip;
+        }
+        else
+        {
+            //reply 4 fields
+            sourceMacAddress = arp_header->ar_sha;
+            sourceIPAddress = arp_header->ar_sip;
+            targetMacAddress = arp_header->ar_tha;
+            targetIPAddress = arp_header->ar_tip;
+        } */
+        //Check if source or target are unique in a map struct...
+    }
+     
     //if first packet get timestamp
     if (count == 0)
     {
