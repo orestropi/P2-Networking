@@ -12,7 +12,23 @@
 #include <time.h> 
 #include <map>
 #include <set>
-#include <linux/if_arp.h>
+#include <linux/ip.h>
+
+//derived from linux kernal header if_arp.h
+struct arphdr {
+	__be16		ar_hrd;		/* format of hardware address	*/
+	__be16		ar_pro;		/* format of protocol address	*/
+	unsigned char	ar_hln;		/* length of hardware address	*/
+	unsigned char	ar_pln;		/* length of protocol address	*/
+	__be16		ar_op;		/* ARP opcode (command)		*/
+	 /*
+	  *	 Ethernet looks like this : This bit is variable sized however...
+	  */
+	unsigned char		ar_sha[ETH_ALEN];	/* sender hardware address	*/
+	unsigned char		ar_sip[4];		/* sender IP address		*/
+	unsigned char		ar_tha[ETH_ALEN];	/* target hardware address	*/
+	unsigned char		ar_tip[4];		/* target IP address		*/
+};
 
 using namespace std;
 
@@ -144,23 +160,28 @@ int main(int argc, char **argv)
     
      if (ntohs(eptr->ether_type) == ETHERTYPE_IP)
     {
+    __be32 sourceAddress = 0, targetAddress = 0;
+    struct iphdr* ip_header = (struct iphdr*) packet;
+    sourceAddress = ip_header->saddr;
+    targetAddress = ip_header->daddr;
+    //Check if source or target are unique in a map struct...
     }
     if (ntohs(eptr->ether_type) == ETHERTYPE_ARP)
     {
     //request or reply by looking at op field
-    const u_char *opField = packet + 6;
     const u_char *sourceMacAddress, *sourceIPAddress, *targetMacAddress, *targetIPAddress;
-    if(isRequest(opField)){
+    struct arphdr* arp_header = (struct arphdr*) packet;
+    if(arp_header->ar_op == 1){
         //request 3 fields
-        sourceMacAddress = packet + 8;
-        sourceIPAddress = packet + 14;
-        targetIPAddress = packet + 24;
+        sourceMacAddress = arp_header->ar_sha;
+        sourceIPAddress = arp_header->ar_sip;
+        targetIPAddress = arp_header->ar_tip;
     }else{
         //reply 4 fields
-        sourceMacAddress = packet + 8;
-        sourceIPAddress = packet + 14;
-        targetMacAddress = packet + 18;
-        targetIPAddress = packet + 24;  
+        sourceMacAddress = arp_header->ar_sha;
+        sourceIPAddress = arp_header->ar_sip;
+        targetMacAddress = arp_header->ar_tha;
+        targetIPAddress = arp_header->ar_tip;  
     }
     //Check if source or target are unique in a map struct...
     } 
