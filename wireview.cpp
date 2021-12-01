@@ -13,22 +13,9 @@
 #include <map>
 #include <set>
 #include <linux/ip.h>
-//derived from linux kernal header if_arp.h
-struct arphdr
-{
-    __be16 ar_hrd;                  /* format of hardware address	*/
-    __be16 ar_pro;                  /* format of protocol address	*/
-    unsigned char ar_hln;           /* length of hardware address	*/
-    unsigned char ar_pln;           /* length of protocol address	*/
-    __be16 ar_op;                   /* ARP opcode (command)		*/
-                                    /*
-	  *	 Ethernet looks like this : This bit is variable sized however...
-	  */
-    unsigned char ar_sha[ETH_ALEN]; /* sender hardware address	*/
-    unsigned char ar_sip[4];        /* sender IP address		*/
-    unsigned char ar_tha[ETH_ALEN]; /* target hardware address	*/
-    unsigned char ar_tip[4];        /* target IP address		*/
-};
+//#include <net/if_ethernet.h>
+#include <net/if_arp.h>
+#include <arpa/inet.h>
 
 using namespace std;
 
@@ -58,9 +45,36 @@ map<int, int> lens; */
 void my_callback(u_char *useless, const struct pcap_pkthdr *pkthdr, const u_char *packet)
 {
     //Ethernet Parsing
-    packet += sizeof(struct ethhdr);
+    //in_addr,ether_addr in_addr
+    //ether_ntoa((const struct ether_addr *)(data));
+    //packet += sizeof(struct ethhdr);
+     //packet = &packets.at(count);
+        const u_char *destination_address;
+        const u_char *source_address;
+        int len;
+        char *data;
+        //*packet + 8 for destination address
+    
+        const u_char *cur_address = packet + 8;
+        destination_address = cur_address;
+        printf("destination: " ,destination_address);
+        //If unique add to list
+        //unique(des_adds, *destination_address, "New Destination: ");
+
+        //result + 6 for source address
+        source_address = cur_address + 6;
+        //If unique add to list
+        //unique(src_adds, *source_address, "New Source: ");
+
+        //result + 6 for length
+        cur_address = source_address + 6;
+        len = *cur_address;
+        //lens.insert(std::pair<int, int>(i, len));
+        cur_address = cur_address+len;
+
         if (ntohs(eptr->ether_type) == ETHERTYPE_IP)
     {
+
         __be32 sourceAddress = 0, targetAddress = 0;
         struct iphdr *ip_header = (struct iphdr *)packet;
         sourceAddress = ip_header->saddr;
@@ -77,7 +91,7 @@ void my_callback(u_char *useless, const struct pcap_pkthdr *pkthdr, const u_char
         if (arp_header->ar_op == 1)
         {
             //request 3 fields
-            sourceMacAddress = arp_header->ar_sha;
+            sourceMacAddress = arp_header->ar_hrd;
             sourceIPAddress = arp_header->ar_sip;
             targetIPAddress = arp_header->ar_tip;
         }
@@ -227,6 +241,6 @@ int main(int argc, char **argv)
         len = *cur_address;
         lens.insert(std::pair<int, int>(i, len));
     }
-    math(lens);
-    return 0; */
+    math(lens);*/
+    return 0; 
 }
