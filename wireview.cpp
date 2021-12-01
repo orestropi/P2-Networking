@@ -17,13 +17,36 @@
     suseconds_t rtimems;
     time_t rtimeLast;
     suseconds_t rtimemsLast;
+#include <map>
+#include <set>
+
+using namespace std;
+//Code shown in class on friday
+static int count = 0;
 
 //Push test
 
+    int i;
+    char *dev;
+    char errbuf[PCAP_ERRBUF_SIZE];
+    pcap_t *descr;
+    const u_char *packet;
+    struct pcap_pkthdr hdr;    /* pcap.h */
+    struct ether_header *eptr; /* net/ethernet.h */
+    u_char **des_adds;
+    std::map<int, const u_char> packets;
 /* callback function that is passed to pcap_loop(..) and called each time 
  * a packet is recieved                                                    */
-void my_callback(u_char *useless,const struct pcap_pkthdr* pkthdr,const u_char*
-        packet)
+    void my_callback(u_char * useless, const struct pcap_pkthdr *pkthdr, const u_char *packet)
+    {
+        //fprintf(stdout,"%d, ",count);
+        count++;
+        fprintf(stdout, "Hello World: %d, ", count);
+        fflush(stdout);
+        packets.insert(std::pair<int, const u_char>(count,*packet));
+    }
+
+int main(int argc, char **argv)
 {
     //if first packet get timestamp
     if(count == 0){
@@ -57,19 +80,30 @@ int main(int argc,char **argv)
     const u_char *packet;
     struct pcap_pkthdr hdr;     /* pcap.h */
     struct ether_header *eptr;  /* net/ethernet.h */
+    
 
-    if(argc != 2){ fprintf(stdout,"Usage: %s numpackets\n",argv[0]);return 0;}
+    if (argc != 2)
+    {
+        fprintf(stdout, "Usage: %s numpackets\n", argv[0]);
+        return 0;
+    }
 
     /* grab a device to peak into... */
     dev = pcap_lookupdev(errbuf);
-    if(dev == NULL)
-    { printf("%s\n",errbuf); exit(1); }
+    if (dev == NULL)
+    {
+        printf("%s\n", errbuf);
+        exit(1);
+    }
     /* open device for reading */
     //descr = pcap_open_live(dev,BUFSIZ,0,-1,errbuf);
     //we want to open, fro p2, offline instead!
-    descr = pcap_open_offline(argv[1],errbuf);
-    if(descr == NULL)
-    { printf("pcap_open_offline(): %s\n",errbuf); exit(1); }
+    descr = pcap_open_offline(argv[1], errbuf);
+    if (descr == NULL)
+    {
+        printf("pcap_open_offline(): %s\n", errbuf);
+        exit(1);
+    }
 
     /* allright here we call pcap_loop(..) and pass in our callback function */
     /* int pcap_loop(pcap_t *p, int cnt, pcap_handler callback, u_char *user)*/
@@ -91,22 +125,54 @@ int main(int argc,char **argv)
     //Printing total number of packets
     fprintf(stdout,"Total Packets Processed: %d, ",count);
     fprintf(stdout,"\nDone processing packets... wheew!\n");
+    pcap_loop(descr, 10000, my_callback, NULL);
+
+    fprintf(stdout, "Total Packets Processed: %d, ", count);
+    fprintf(stdout, "\nDone processing packets... wheew!\n");
+   /*  if (ntoh(eptr->ether_type) == ETHERTYPE_IP)
+    {
+    }
+    if (ntoh(eptr->ether_type) == ETHERTYPE_ARP)
+    {
+    } */
     //Ethernet parsing
     //loop through all packets. pointer arthmetic to parse
-    for(int i=0; i<count; i++){
+
+    set<const u_char> des_adds;
+    set<const u_char> src_adds;
+    for (int i = 0; i < count; i++)
+    {
+        const u_char *destination_address;
+        const u_char *source_address;
+        double len;
+        char *data;
         //*packet + 8 for destination address
-            //If unique add to list
+        const u_char *cur_address = packet + 8;
+        destination_address = cur_address;
+        //If unique add to list
+        auto found = des_adds.find(*destination_address);
+        if(found !=des_adds.end())
+        {
+            des_adds.insert(*destination_address);
+            printf("New Destination: ", *destination_address);
+        }
         //result + 6 for source address
-            //If unique add to list
+        source_address = cur_address + 6;
+        //If unique add to list
+        found = src_adds.find(*source_address);
+        if (found!= src_adds.end())
+            {
+                src_adds.insert(*source_address);
+                printf("New Source: ", *source_address);
+            }
         //result + 6 for length
+        cur_address = source_address + 6;
+        len = *cur_address;
         //result + 2 for data
+        cur_address += 2;
         //parse data for length of length
+        //Do we need the data? I don't think we need the data so I'm waiting on this?
+        }
 
+        return 0;
     }
-    
-    return 0;
-}
-
-
-
-
