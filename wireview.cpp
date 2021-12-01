@@ -88,7 +88,7 @@ void my_callback(u_char *useless, const struct pcap_pkthdr *pkthdr, const u_char
         //request or reply by looking at op field
         u_char *sourceMacAddress, *sourceIPAddress, *targetMacAddress, *targetIPAddress;
         struct arphdr *arp_header = (struct arphdr *)packet;
-        if (arp_header->ar_op == 1)
+        /* if (arp_header->ar_op == 1)
         {
             //request 3 fields
             sourceMacAddress = arp_header->ar_hrd;
@@ -102,7 +102,7 @@ void my_callback(u_char *useless, const struct pcap_pkthdr *pkthdr, const u_char
             sourceIPAddress = arp_header->ar_sip;
             targetMacAddress = arp_header->ar_tha;
             targetIPAddress = arp_header->ar_tip;
-        }
+        } */
         //Check if source or target are unique in a map struct...
     }
     
