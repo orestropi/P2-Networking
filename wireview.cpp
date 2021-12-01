@@ -12,6 +12,7 @@
 #include <time.h> 
 #include <map>
 #include <set>
+#include <linux/if_arp.h>
 
 using namespace std;
 
@@ -141,12 +142,29 @@ int main(int argc, char **argv)
     fprintf(stdout,"Total Packets Processed: %d, ",count);
     fprintf(stdout,"\nDone processing packets... wheew!\n");
     
-   /*  if (ntoh(eptr->ether_type) == ETHERTYPE_IP)
+     if (ntohs(eptr->ether_type) == ETHERTYPE_IP)
     {
     }
-    if (ntoh(eptr->ether_type) == ETHERTYPE_ARP)
+    if (ntohs(eptr->ether_type) == ETHERTYPE_ARP)
     {
-    } */
+    //request or reply by looking at op field
+    const u_char *opField = packet + 6;
+    const u_char *sourceMacAddress, *sourceIPAddress, *targetMacAddress, *targetIPAddress;
+    if(isRequest(opField)){
+        //request 3 fields
+        sourceMacAddress = packet + 8;
+        sourceIPAddress = packet + 14;
+        targetIPAddress = packet + 24;
+    }else{
+        //reply 4 fields
+        sourceMacAddress = packet + 8;
+        sourceIPAddress = packet + 14;
+        targetMacAddress = packet + 18;
+        targetIPAddress = packet + 24;  
+    }
+    //Check if source or target are unique in a map struct...
+    } 
+
     //Ethernet parsing
     //loop through all packets. pointer arthmetic to parse
 
