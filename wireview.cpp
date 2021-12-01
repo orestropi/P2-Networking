@@ -12,6 +12,7 @@
 #include <time.h> 
 #include <map>
 #include <set>
+
 using namespace std;
 
     static int count = 0;
@@ -36,6 +37,7 @@ static int count = 0;
     struct ether_header *eptr; /* net/ethernet.h */
     u_char **des_adds;
     std::map<int, const u_char> packets;
+    map<int,int> lens;
 /* callback function that is passed to pcap_loop(..) and called each time 
  * a packet is recieved                                                    */
     void my_callback(u_char * useless, const struct pcap_pkthdr *pkthdr, const u_char *packet)
@@ -62,6 +64,32 @@ static int count = 0;
     fprintf(stdout,"Hello World: %d, ",count);
     fflush(stdout);
     packets.insert(std::pair<int, const u_char>(count,*packet));
+    }
+    void unique(set<const u_char> list,const u_char address, const char* statement){
+      auto found = list.find(address);
+        if(found !=list.end())
+        {
+            list.insert(address);
+            printf(statement, address);
+        }  
+    }
+    void math(map<int,int> lengths){
+        int min = lengths.at(0);
+        int max= lengths.at(0);
+        int ave = lengths.at(0);
+        for(int i=1; i<lengths.size();i++){
+            if(lengths.at(i)<min){
+                min = lengths.at(i);
+            }
+            if(lengths.at(i)> max){
+                max=lengths.at(i);
+            }
+            ave+=lengths.at(i);
+        }
+        printf("The smallest packet collected was size: ", min);
+        printf("The biggest sized packet collected was size: ", max);
+        ave /= lengths.size();
+        printf("The average size of the packets collected is: ", ave);
     }
 
 int main(int argc, char **argv)
@@ -112,10 +140,7 @@ int main(int argc, char **argv)
     //Printing total number of packets
     fprintf(stdout,"Total Packets Processed: %d, ",count);
     fprintf(stdout,"\nDone processing packets... wheew!\n");
-    pcap_loop(descr, 10000, my_callback, NULL);
-
-    fprintf(stdout, "Total Packets Processed: %d, ", count);
-    fprintf(stdout, "\nDone processing packets... wheew!\n");
+    
    /*  if (ntoh(eptr->ether_type) == ETHERTYPE_IP)
     {
     }
@@ -127,6 +152,7 @@ int main(int argc, char **argv)
 
     set<const u_char> des_adds;
     set<const u_char> src_adds;
+    
     for (int i = 0; i < count; i++)
     {
         const u_char *destination_address;
@@ -137,28 +163,17 @@ int main(int argc, char **argv)
         const u_char *cur_address = packet + 8;
         destination_address = cur_address;
         //If unique add to list
-        auto found = des_adds.find(*destination_address);
-        if(found !=des_adds.end())
-        {
-            des_adds.insert(*destination_address);
-            printf("New Destination: ", *destination_address);
-        }
+        unique(des_adds,*destination_address, "New Destination: ");
+
         //result + 6 for source address
         source_address = cur_address + 6;
         //If unique add to list
-        found = src_adds.find(*source_address);
-        if (found!= src_adds.end())
-            {
-                src_adds.insert(*source_address);
-                printf("New Source: ", *source_address);
-            }
+        unique(src_adds,*source_address, "New Source: ");
+        
         //result + 6 for length
         cur_address = source_address + 6;
         len = *cur_address;
-        //result + 2 for data
-        cur_address += 2;
-        //parse data for length of length
-        //Do we need the data? I don't think we need the data so I'm waiting on this?
+        lens.insert(std::pair<int, int>(i,len));
         }
 
         return 0;
