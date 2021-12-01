@@ -175,6 +175,6 @@ int main(int argc, char **argv)
         len = *cur_address;
         lens.insert(std::pair<int, int>(i,len));
         }
-
+        math(lens);
         return 0;
     }
