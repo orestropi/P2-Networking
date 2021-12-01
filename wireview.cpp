@@ -50,7 +50,7 @@ void my_callback(u_char *useless, const struct pcap_pkthdr *pkthdr, const u_char
         //*packet + 8 for destination address
         const u_char *cur_address = packet + 8;
         destination_address = cur_address;
-        printf("destination: " ,destination_address);
+        fprintf(stdout, "Hello World: %d, ", destination_address);
         //If unique add to list
         //unique(des_adds, *destination_address, "New Destination: ");
 
