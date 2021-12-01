@@ -53,6 +53,7 @@ void my_callback(u_char *useless, const struct pcap_pkthdr *pkthdr, const u_char
              if (ntohs(eptr->ether_type) == ETHERTYPE_IP)
     {
         __be32 sourceAddress = 0, targetAddress = 0;
+        packet += sizeof(struct ether_addr);
         struct iphdr *ip_header = (struct iphdr *)packet;
         sourceAddress = ip_header->saddr;
         targetAddress = ip_header->daddr;
