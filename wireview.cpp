@@ -44,14 +44,14 @@ map<int, int> lens; */
 void my_callback(u_char *useless, const struct pcap_pkthdr *pkthdr, const u_char *packet)
 {
     //ethernet parsing
-    struct ethhdr* eth_header = (struct ethhdr*) packet;
+    struct ether_header* eth_header = (struct ether_header*) packet;
      u_char *sourceAddress, *targetAddress;
         
-        sourceAddress = eth_header->h_source;
-        targetAddress = eth_header->h_dest;
+        sourceAddress = eth_header->ether_shost;
+        targetAddress = eth_header->ether_dhost;
 
 
-        fprintf(stdout, "Hello World: %d, ",sourceAddress );
+        fprintf(stdout, "RRRRRRRRRRR: %d, ",sourceAddress );
         
 
     //if first packet get timestamp
