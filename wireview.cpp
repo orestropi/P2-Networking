@@ -40,17 +40,8 @@ static int count = 0;
  * a packet is recieved                                                    */
     void my_callback(u_char * useless, const struct pcap_pkthdr *pkthdr, const u_char *packet)
     {
-        //fprintf(stdout,"%d, ",count);
-        count++;
-        fprintf(stdout, "Hello World: %d, ", count);
-        fflush(stdout);
-        packets.insert(std::pair<int, const u_char>(count,*packet));
-    }
-
-int main(int argc, char **argv)
-{
-    //if first packet get timestamp
-    if(count == 0){
+         //if first packet get timestamp
+        if(count == 0){
         fprintf(stdout,"Time Stamp: %d, ",pkthdr->ts.tv_sec);
         rtime = (time_t)pkthdr->ts.tv_sec;
         rtimems = (suseconds_t)pkthdr->ts.tv_usec;
@@ -70,18 +61,13 @@ int main(int argc, char **argv)
     count++;
     fprintf(stdout,"Hello World: %d, ",count);
     fflush(stdout);
-}
+    packets.insert(std::pair<int, const u_char>(count,*packet));
+    }
 
-int main(int argc,char **argv)
-{ 
-    int i;
-    char *dev; 
-    char errbuf[PCAP_ERRBUF_SIZE];
-    pcap_t* descr;
-    const u_char *packet;
-    struct pcap_pkthdr hdr;     /* pcap.h */
-    struct ether_header *eptr;  /* net/ethernet.h */
-    
+int main(int argc, char **argv)
+{
+
+
 
     if (argc != 2)
     {
