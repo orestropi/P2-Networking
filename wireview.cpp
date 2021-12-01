@@ -52,7 +52,7 @@ void my_callback(u_char *useless, const struct pcap_pkthdr *pkthdr, const u_char
         int len;
         char *data;
         //*packet + 8 for destination address
-    
+        printf("destination: ");
         const u_char *cur_address = packet + 8;
         destination_address = cur_address;
         printf("destination: " ,destination_address);
