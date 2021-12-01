@@ -18,8 +18,6 @@
 #include <arpa/inet.h>
 
 using namespace std;
-
-static int count = 0;
 time_t rtime;
 suseconds_t rtimems;
 time_t rtimeLast;
