@@ -17,7 +17,6 @@
 //#include <net/if_ethernet.h>
 #include <net/if_arp.h>
 #include <arpa/inet.h>
-
 using namespace std;
 time_t rtime;
 suseconds_t rtimems;
@@ -44,14 +43,11 @@ map<int, int> lens; */
 void my_callback(u_char *useless, const struct pcap_pkthdr *pkthdr, const u_char *packet)
 {
     //ethernet parsing
-    struct ether_header* eth_header = (struct ether_header*) packet;
-     u_char *sourceAddress, *targetAddress;
-        
-        sourceAddress = eth_header->ether_shost;
-        targetAddress = eth_header->ether_dhost;
-
-
-        fprintf(stdout, "RRRRRRRRRRR: %d, ",sourceAddress );
+     eptr = (struct ether_header *) packet;
+      fprintf(stdout,"ethernet header source: %s"
+            ,((const struct ether_addr *)&eptr->ether_shost));
+    fprintf(stdout," destination: %s "
+            ,((const struct ether_addr *)&eptr->ether_dhost));
         
 
     //if first packet get timestamp
