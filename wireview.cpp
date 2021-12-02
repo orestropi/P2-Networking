@@ -88,32 +88,35 @@ void my_callback(u_char *useless, const struct pcap_pkthdr *pkthdr, const u_char
             ntohs(udp->uh_dport));    
     }
     }
-    if (ntohs(eptr->ether_type) == ETHERTYPE_ARP)
+ if (ntohs(eptr->ether_type) == ETHERTYPE_ARP)
     {
         const struct myarphdr* arp = (struct myarphdr*)(packet + sizeof(struct ether_header));
         if (arp->ar_op == htons(ARPOP_REQUEST))
-        {   fprintf(stdout,"IM an arp request!");
+        {
             //request 3 fields
-            fprintf(stdout,"ARP sender hardware(MAC) address: %s ",
-               ether_ntoa((ether_addr *)arp->ar_sha));
-            fprintf(stdout,"ARP sender IP address: %s ",
-               inet_ntoa(*(in_addr*)arp->ar_sip));               
-            fprintf(stdout,"ARP target IP address: %s ",
-               inet_ntoa(*(in_addr*)arp->ar_tip));             
+            fprintf(stdout,"!!!!!!sender hardware(MAC) address:");
+            cout << ether_ntoa((ether_addr *)arp->ar_sha) <<endl;
+            fprintf(stdout,"!!!!sender IP address:");
+            cout << inet_ntoa(*(in_addr*)arp->ar_sip) <<endl;
+            fprintf(stdout,"!!!!!target IP address:");
+            //cout << inet_ntoa(arp->ar_tip) <<endl;
+              fprintf(stdout,"!!!!!IP source address: IM IP!"
+            );
         }
         else
         { fprintf(stdout,"IM an arp reply!");
 
             //reply 4 fields
-            fprintf(stdout,"ARP sender hardware(MAC) address: %s ",
-               ether_ntoa((ether_addr *)arp->ar_sha));
-            fprintf(stdout,"ARP sender IP address: %s ",
-               inet_ntoa(*(in_addr*)arp->ar_sip));
-            fprintf(stdout,"ARP target hardware(MAC) address: %s ",
-               ether_ntoa((ether_addr *)arp->ar_tha));               
-            fprintf(stdout,"ARP target IP address: %s ",
-               inet_ntoa(*(in_addr*)arp->ar_tip));              
+            fprintf(stdout,"sender hardware(MAC) address:");
+            cout << (arp->ar_sha) <<endl;
+            fprintf(stdout,"sender IP address:");
+            cout << (arp->ar_sip) <<endl;
+            fprintf(stdout,"target hardware(MAC) address:");
+            cout << (arp->ar_tha) <<endl;
+            fprintf(stdout,"target IP address:");
+            cout << (arp->ar_tip) <<endl;
         }
+
         //request or reply by looking at op field
        /* u_char *sourceMacAddress, *sourceIPAddress, *targetMacAddress, *targetIPAddress;
         struct arphdr *arp_header = (struct arphdr *)packet;
