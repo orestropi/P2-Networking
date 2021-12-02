@@ -89,7 +89,7 @@ void my_callback(u_char *useless, const struct pcap_pkthdr *pkthdr, const u_char
                  fprintf(stdout,"ARp1: %s ",
                 arp->ar_sha);
         fprintf(stdout,"Arp2: %s\n",
-                arp->ar_sha;
+                arp->ar_sha);
               fprintf(stdout,"IP source address: IM IP!"
             );
         }
