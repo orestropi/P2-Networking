@@ -17,7 +17,7 @@
 //#include <net/if_ethernet.h>
 #include <netinet/ether.h>
 #include <netinet/ip.h>
-#include <net/if_arp.h>
+//#include <net/if_arp.h>
 #include <arpa/inet.h>
 using namespace std;
 time_t rtime;
@@ -51,7 +51,8 @@ void my_callback(u_char *useless, const struct pcap_pkthdr *pkthdr, const u_char
       fprintf(stdout,"Ethernet Destination: %s "
             ,ether_ntoa((const struct ether_addr *)&eptr->ether_dhost));
 
-             if (ntohs(eptr->ether_type) == ETHERTYPE_IP)
+    
+    if (ntohs(eptr->ether_type) == ETHERTYPE_IP)
     {
      const struct ip* ip = (struct ip*)(packet + sizeof(struct ether_header));
      fprintf(stdout,"IP source: %s ",
@@ -63,6 +64,17 @@ void my_callback(u_char *useless, const struct pcap_pkthdr *pkthdr, const u_char
     }
     if (ntohs(eptr->ether_type) == ETHERTYPE_ARP)
     {
+        const struct arphdr* arp = (struct arphdr*)(packet + sizeof(struct ip));
+        if (arp->ar_op == 1)
+        {
+            //request 3 fields
+            fprintf(stdout,"IM an arp request!");
+        }
+        else
+        { fprintf(stdout,"IM an arp reply!");
+
+            //reply 4 fields
+        }
         //request or reply by looking at op field
        /* u_char *sourceMacAddress, *sourceIPAddress, *targetMacAddress, *targetIPAddress;
         struct arphdr *arp_header = (struct arphdr *)packet;
