@@ -68,6 +68,7 @@ void my_callback(u_char *useless, const struct pcap_pkthdr *pkthdr, const u_char
         const struct arphdr* arp = (struct arphdr*)(packet + sizeof(struct ether_header));
         if (arp->ar_op == htons(ARPOP_REQUEST))
         {
+            //reply 4 fields
             fprintf(stdout,"IM an arp request!");
         }
         else
