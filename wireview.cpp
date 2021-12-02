@@ -78,7 +78,7 @@ void my_callback(u_char *useless, const struct pcap_pkthdr *pkthdr, const u_char
                 inet_ntoa(ip->ip_dst));
 
     //Check for UDP
-    if(ip->ip_p == 17){
+    if(true){
         const struct udphdr* udp = (struct udphdr*)(packet + sizeof(struct ether_header) + sizeof(struct ip));
         //get ports for UDP
         fprintf(stdout,"I have a UDP header!!");
@@ -91,7 +91,7 @@ void my_callback(u_char *useless, const struct pcap_pkthdr *pkthdr, const u_char
  if (ntohs(eptr->ether_type) == ETHERTYPE_ARP)
     {
         const struct myarphdr* arp = (struct myarphdr*)(packet + sizeof(struct ether_header));
-        if (true)
+        if (arp->ar_op == htons(ARPOP_REQUEST))
         {
             //request 3 fields
             fprintf(stdout,"!!!!!!sender hardware(MAC) address:");
