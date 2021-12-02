@@ -95,27 +95,25 @@ void my_callback(u_char *useless, const struct pcap_pkthdr *pkthdr, const u_char
         if (arp->ar_op == htons(ARPOP_REQUEST))
         {
             //request 3 fields
-            fprintf(stdout,"!!!!!!sender hardware(MAC) address:");
+            fprintf(stdout,"sender hardware(MAC) address:");
             cout << ether_ntoa((ether_addr *)arp->ar_sha) <<endl;
-            fprintf(stdout,"!!!!sender IP address:");
+            fprintf(stdout,"sender IP address:");
             cout << inet_ntoa(*(in_addr*)arp->ar_sip) <<endl;
-            fprintf(stdout,"!!!!!target IP address:");
-            //cout << inet_ntoa(arp->ar_tip) <<endl;
-              fprintf(stdout,"!!!!!IP source address: IM IP!"
-            );
+            fprintf(stdout,"target IP address:");
+            cout << inet_ntoa(*(in_addr*)arp->ar_tip) <<endl;
         }
         else
         { fprintf(stdout,"IM an arp reply!");
 
             //reply 4 fields
             fprintf(stdout,"sender hardware(MAC) address:");
-            cout << (arp->ar_sha) <<endl;
+            cout << ether_ntoa((ether_addr *)arp->ar_sha) <<endl;
             fprintf(stdout,"sender IP address:");
-            cout << (arp->ar_sip) <<endl;
+            cout << inet_ntoa(*(in_addr*)arp->ar_sip) <<endl;
             fprintf(stdout,"target hardware(MAC) address:");
-            cout << (arp->ar_tha) <<endl;
+            cout << ether_ntoa((ether_addr *)arp->ar_tha) <<endl;
             fprintf(stdout,"target IP address:");
-            cout << (arp->ar_tip) <<endl;
+            cout << inet_ntoa(*(in_addr*)arp->ar_tip) <<endl;
         }
         //request or reply by looking at op field
        /* u_char *sourceMacAddress, *sourceIPAddress, *targetMacAddress, *targetIPAddress;
