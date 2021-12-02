@@ -12,7 +12,7 @@
 #include <time.h>
 #include <map>
 #include <set>
-#include <linux/ip.h>
+//#include <linux/ip.h>
 #include <linux/if_ether.h>
 //#include <net/if_ethernet.h>
 #include <netinet/ether.h>
