@@ -91,7 +91,7 @@ void my_callback(u_char *useless, const struct pcap_pkthdr *pkthdr, const u_char
  if (ntohs(eptr->ether_type) == ETHERTYPE_ARP)
     {
         const struct myarphdr* arp = (struct myarphdr*)(packet + sizeof(struct ether_header));
-        if (arp->ar_op == htons(ARPOP_REQUEST))
+        if (true)
         {
             //request 3 fields
             fprintf(stdout,"!!!!!!sender hardware(MAC) address:");
