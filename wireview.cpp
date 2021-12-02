@@ -83,10 +83,11 @@ void my_callback(u_char *useless, const struct pcap_pkthdr *pkthdr, const u_char
     if(ip->ip_p == 17){
         const struct udphdr* udp = (struct udphdr*)(packet + sizeof(struct ether_header) + sizeof(struct ip));
         //get ports for UDP
-        fprintf(stdout,"Source port:");
-        cout << ntohs(udp->uh_sport) <<endl;
-        fprintf(stdout,"Destination port:");
-        cout << ntohs(udp->uh_dport) <<endl;
+        fprintf(stdout,"I have a UDP header!!");
+        fprintf(stdout,"Source port: %s ",
+            ntohs(udp->uh_sport));
+        fprintf(stdout,"Destination port: %s ",
+            ntohs(udp->uh_dport));    
     }
     }
     if (ntohs(eptr->ether_type) == ETHERTYPE_ARP)
