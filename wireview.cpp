@@ -66,10 +66,8 @@ void my_callback(u_char *useless, const struct pcap_pkthdr *pkthdr, const u_char
     {
         unsigned short arNum = 1;
         const struct arphdr* arp = (struct arphdr*)(packet + sizeof(struct ether_header));
-        fprintf(stdout,"IM giving a value of %d", arp->ar_op);
-        if (arp->ar_op == 1)
+        if (arp->ar_op == htons(ARPOP_REQUEST))
         {
-            //request 3 fields
             fprintf(stdout,"IM an arp request!");
         }
         else
