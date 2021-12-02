@@ -84,9 +84,9 @@ void my_callback(u_char *useless, const struct pcap_pkthdr *pkthdr, const u_char
         const struct udphdr* udp = (struct udphdr*)(packet + sizeof(struct ether_header) + sizeof(struct ip));
         //get ports for UDP
         fprintf(stdout,"Source port:");
-        cout << (udp->uh_sport) <<endl;
+        cout << ntohs(udp->uh_sport) <<endl;
         fprintf(stdout,"Destination port:");
-        cout << (udp->uh_dport) <<endl;
+        cout << ntohs(udp->uh_dport) <<endl;
     }
     }
     if (ntohs(eptr->ether_type) == ETHERTYPE_ARP)
