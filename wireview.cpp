@@ -76,8 +76,7 @@ void my_callback(u_char *useless, const struct pcap_pkthdr *pkthdr, const u_char
                 inet_ntoa(ip->ip_src));
         fprintf(stdout,"IP destintation: %s\n",
                 inet_ntoa(ip->ip_dst));
-              fprintf(stdout,"IP source address: IM IP!"
-            );
+                            );
 
     //Check for UDP
     if(ip->ip_p == 17){
