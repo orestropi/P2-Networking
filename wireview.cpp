@@ -65,7 +65,7 @@ void my_callback(u_char *useless, const struct pcap_pkthdr *pkthdr, const u_char
     if (ntohs(eptr->ether_type) == ETHERTYPE_ARP)
     {
         uint16_t arNum = 1;
-        const struct arphdr* arp = (struct arphdr*)(packet + sizeof(struct ip));
+        const struct arphdr* arp = (struct arphdr*)(packet + sizeof(struct ether_header));
         if (arp->ar_op == arNum)
         {
             //request 3 fields
