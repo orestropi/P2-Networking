@@ -65,7 +65,7 @@ void my_callback(u_char *useless, const struct pcap_pkthdr *pkthdr, const u_char
     if (ntohs(eptr->ether_type) == ETHERTYPE_ARP)
     {
         const struct arphdr* arp = (struct arphdr*)(packet + sizeof(struct ip));
-        if (arp->ar_op == 1)
+        if (arp->ar_op == (unsigned short)1)
         {
             //request 3 fields
             fprintf(stdout,"IM an arp request!");
