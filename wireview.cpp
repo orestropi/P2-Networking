@@ -1,6 +1,6 @@
 
 //Part of code from Martin Casado
-
+#include <iostream>
 #include <pcap.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -86,10 +86,9 @@ void my_callback(u_char *useless, const struct pcap_pkthdr *pkthdr, const u_char
         {
             //request 3 fields
             fprintf(stdout,"IM an arp request!");
-                 fprintf(stdout,"ARp1: %s ",
-                arp->ar_sha);
+            cout << (arp->ar_sha) <<endl;
         fprintf(stdout,"Arp2: %s\n",
-                arp->ar_sha);
+                arp->ar_tip);
               fprintf(stdout,"IP source address: IM IP!"
             );
         }
@@ -104,7 +103,7 @@ void my_callback(u_char *useless, const struct pcap_pkthdr *pkthdr, const u_char
          if (arp_header->ar_op == 1)
         {
             //request 3 fields
-            sourceMacAddress = arp_header->ar_hrd;
+            sourceMacAddress = arp_header->ar_sha;
             sourceIPAddress = arp_header->ar_sip;
             targetIPAddress = arp_header->ar_tip;
         }
