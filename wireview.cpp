@@ -76,19 +76,20 @@ void my_callback(u_char *useless, const struct pcap_pkthdr *pkthdr, const u_char
                 inet_ntoa(ip->ip_src));
         fprintf(stdout,"IP destintation: %s\n",
                 inet_ntoa(ip->ip_dst));
+              fprintf(stdout,"IP source address: IM IP!"
+            );
 
     //Check for UDP
-    if(true){
+    if(ip->ip_p == 17){
         const struct udphdr* udp = (struct udphdr*)(packet + sizeof(struct ether_header) + sizeof(struct ip));
         //get ports for UDP
-        fprintf(stdout,"I have a UDP header!!");
-        fprintf(stdout,"Source port: %s ",
-            ntohs(udp->uh_sport));
-        fprintf(stdout,"Destination port: %s ",
-            ntohs(udp->uh_dport));    
+        fprintf(stdout,"Source port:");
+        cout << ntohs(udp->uh_sport) <<endl;
+        fprintf(stdout,"Destination port:");
+        cout << ntohs(udp->uh_dport) <<endl;
     }
     }
- if (ntohs(eptr->ether_type) == ETHERTYPE_ARP)
+    if (ntohs(eptr->ether_type) == ETHERTYPE_ARP)
     {
         const struct myarphdr* arp = (struct myarphdr*)(packet + sizeof(struct ether_header));
         if (arp->ar_op == htons(ARPOP_REQUEST))
@@ -116,7 +117,6 @@ void my_callback(u_char *useless, const struct pcap_pkthdr *pkthdr, const u_char
             fprintf(stdout,"target IP address:");
             cout << (arp->ar_tip) <<endl;
         }
-
         //request or reply by looking at op field
        /* u_char *sourceMacAddress, *sourceIPAddress, *targetMacAddress, *targetIPAddress;
         struct arphdr *arp_header = (struct arphdr *)packet;
