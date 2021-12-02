@@ -40,6 +40,22 @@ struct ether_header *eptr; /* c */
 u_char **des_adds;
 /* std::map<int, const u_char> packets;
 map<int, int> lens; */
+//derived from linux kernal header if_arp.h
+struct myarphdr {
+	__be16		ar_hrd;		/* format of hardware address	*/
+	__be16		ar_pro;		/* format of protocol address	*/
+	unsigned char	ar_hln;		/* length of hardware address	*/
+	unsigned char	ar_pln;		/* length of protocol address	*/
+	__be16		ar_op;		/* ARP opcode (command)		*/
+	 /*
+	  *	 Ethernet looks like this : This bit is variable sized however...
+	  */
+	unsigned char		ar_sha[ETH_ALEN];	/* sender hardware address	*/
+	unsigned char		ar_sip[4];		/* sender IP address		*/
+	unsigned char		ar_tha[ETH_ALEN];	/* target hardware address	*/
+	unsigned char		ar_tip[4];		/* target IP address		*/
+};
+
 /* callback function that is passed to pcap_loop(..) and called each time 
  * a packet is recieved                                                    */
 void my_callback(u_char *useless, const struct pcap_pkthdr *pkthdr, const u_char *packet)
@@ -65,11 +81,17 @@ void my_callback(u_char *useless, const struct pcap_pkthdr *pkthdr, const u_char
     if (ntohs(eptr->ether_type) == ETHERTYPE_ARP)
     {
         unsigned short arNum = 1;
-        const struct arphdr* arp = (struct arphdr*)(packet + sizeof(struct ether_header));
+        const struct myarphdr* arp = (struct myarphdr*)(packet + sizeof(struct ether_header));
         if (arp->ar_op == htons(ARPOP_REQUEST))
         {
-            //reply 4 fields
+            //request 3 fields
             fprintf(stdout,"IM an arp request!");
+                 fprintf(stdout,"ARp1: %s ",
+                arp->ar_sha);
+        fprintf(stdout,"Arp2: %s\n",
+                arp->ar_sha;
+              fprintf(stdout,"IP source address: IM IP!"
+            );
         }
         else
         { fprintf(stdout,"IM an arp reply!");
