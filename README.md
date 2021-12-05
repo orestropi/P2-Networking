@@ -5,7 +5,9 @@ Project Descriptions: https://ia.wpi.edu/cs3516/resources.php?page=show_project&
 Final for P2:
 
 Completed Tasks:
+
 Tasks 1&2 are fully completed, Tasks 3-5 are completed for the parsing of each packet(print statements prove this), task 6 is not attempted
+
 For task 3-5 we did not filter for unique addresses and ports, this psuedocode is in the wireviewNotFunctional.cpp file
 
 How to run:
