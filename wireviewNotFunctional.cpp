@@ -38,16 +38,16 @@ const u_char *packet;
 struct pcap_pkthdr hdr;    /* pcap.h */
 struct ether_header *eptr; /* c */
 u_char **des_adds;
-set<const struct ether_addr *> ether_sources;
-set<const struct ether_addr *> ether_destinations;
-set<const struct ether_addr *> ip_sources;
-set<const struct ether_addr *> ip_destinations;
-set<const struct ether_addr *> arp_sources;
-set<const struct ether_addr *> arp_destinations;
-set<const struct ether_addr *> mac_address;
-set<const struct ether_addr *> associated_ip;
-set<const struct ether_addr *> udp_source;
-set<const struct ether_addr *> udp_destination;
+set<char*> ether_sources;
+set<char*> ether_destinations;
+set<char*> ip_sources;
+set<char*> ip_destinations;
+set<char*> arp_sources;
+set<char*> arp_destinations;
+set<char*> mac_address;
+set<char*> associated_ip;
+set<char*> udp_source;
+set<char*> udp_destination;
 /* std::map<int, const u_char> packets;
 map<int, int> lens; */
 //derived from linux kernal header if_arp.h
@@ -74,31 +74,17 @@ void my_callback(u_char *useless, const struct pcap_pkthdr *pkthdr, const u_char
     //ethernet parsing
     eptr = (struct ether_header *)packet;
     fprintf(stdout, "Ethernet Source: %s", ether_ntoa((const struct ether_addr *)&eptr->ether_shost));
-    auto found = ether_sources.find((const struct ether_addr *)&eptr->ether_shost);
+    auto found = ether_sources.find(ether_ntoa((const struct ether_addr *)&eptr->ether_shost));
     if (found == ether_sources.end())
     {
-        ether_sources.insert(&(const struct ether_addr *)&eptr->ether_shost);
+        ether_sources.insert(ether_ntoa((const struct ether_addr *)&eptr->ether_shost));
         //printf(statement, address);
     }
     fprintf(stdout, "Ethernet Destination: %s ", ether_ntoa((const struct ether_addr *)&eptr->ether_dhost));
-    found = ether_destinations.find((const struct ether_addr *)&eptr->ether_dhost);
+    found = ether_destinations.find(ether_ntoa((const struct ether_addr *)&eptr->ether_dhost));
     if (found == ether_destinations.end())
     {
-        ether_destinations.insert(&(const struct ether_addr *)&eptr->ether_dhost);
-        //printf(statement, address);
-    }
-    found = ip_sources.find((const struct ether_addr *)&eptr->ether_shost);
-    if (found == ip_sources.end())
-    {
-        ip_sources.insert((const struct ether_addr *)&eptr->ether_shost);
-        //printf(statement, address);
-    }
-
-    fprintf(stdout, " destination: %s ", ether_ntoa((const struct ether_addr *)&eptr->ether_dhost));
-    found = ip_destinations.find((const struct ether_addr *)&eptr->ether_dhost);
-    if (found == ip_destinations.end())
-    {
-        ip_destinations.insert((const struct ether_addr *)&eptr->ether_dhost);
+        ether_destinations.insert(ether_ntoa((const struct ether_addr *)&eptr->ether_dhost));
         //printf(statement, address);
     }
 
@@ -110,18 +96,18 @@ void my_callback(u_char *useless, const struct pcap_pkthdr *pkthdr, const u_char
         fprintf(stdout, "IP destintation: %s\n",
                 inet_ntoa(ip->ip_dst));
         fprintf(stdout, "IP source address: IM IP!");
-        found = ip_sources.find((const struct ether_addr *)&eptr->ether_shost);
+        found = ip_sources.find(inet_ntoa(ip->ip_src));
         if (found == ip_sources.end())
         {
-            ip_sources.insert((const struct ether_addr *)&eptr->ether_shost);
+            ip_sources.insert(inet_ntoa(ip->ip_src));
             //printf(statement, address);
         }
 
         fprintf(stdout, " destination: %s ", ether_ntoa((const struct ether_addr *)&eptr->ether_dhost));
-        found = ip_destinations.find((const struct ether_addr *)&eptr->ether_dhost);
+        found = ip_destinations.find(inet_ntoa(ip->ip_dst));
         if (found == ip_destinations.end())
         {
-            ip_sources.insert((const struct ether_addr *)&eptr->ether_shost);
+            ip_sources.insert(inet_ntoa(ip->ip_dst));
             //printf(statement, address);
         }
 
