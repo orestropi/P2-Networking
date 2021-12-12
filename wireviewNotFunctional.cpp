@@ -102,11 +102,10 @@ void my_callback(u_char *useless, const struct pcap_pkthdr *pkthdr, const u_char
             //printf(statement, address);
         }
 
-        fprintf(stdout, " destination: %s ", ether_ntoa((const struct ether_addr *)&eptr->ether_dhost));
         found = ip_destinations.find(inet_ntoa(ip->ip_dst));
         if (found == ip_destinations.end())
         {
-            ip_sources.insert(inet_ntoa(ip->ip_dst));
+            ip_destinations.insert(inet_ntoa(ip->ip_dst));
             //printf(statement, address);
         }
 
