@@ -42,10 +42,10 @@ unordered_set<string> ether_sources;
 unordered_set<string> ether_destinations;
 unordered_set<string> ip_sources;
 unordered_set<string> ip_destinations;
-unordered_set<string> arp_sources;
-unordered_set<string> arp_destinations;
-unordered_set<string> mac_address;
-unordered_set<string> associated_ip;
+unordered_set<string> arp_sources_mac;
+unordered_set<string> arp_destinations_mac;
+unordered_set<string> arp_sources_ip;
+unordered_set<string> arp_destinations_ip;
 unordered_set<string> udp_source;
 unordered_set<string> udp_destination;
 /* std::map<int, const u_char> packets;
@@ -129,27 +129,27 @@ void my_callback(u_char *useless, const struct pcap_pkthdr *pkthdr, const u_char
             //request 3 fields
             fprintf(stdout, "sender hardware(MAC) address:");
             cout << ether_ntoa((ether_addr *)arp->ar_sha) << endl;
-            found = mac_address.find((ether_ntoa((ether_addr *)arp->ar_sha)));
-            if (found == arp_sources.end())
+            found = arp_sources_mac.find((ether_ntoa((ether_addr *)arp->ar_sha)));
+            if (found == arp_sources_mac.end())
             {
-                arp_sources.insert((ether_ntoa((ether_addr *)arp->ar_sha)));
+                arp_sources_mac.insert((ether_ntoa((ether_addr *)arp->ar_sha)));
                 //printf(statement, address);
             }
             fprintf(stdout, "sender IP address:");
             cout << inet_ntoa(*(in_addr *)arp->ar_sip) << endl;
-            found = arp_sources.find((inet_ntoa(*(in_addr *)arp->ar_sip)));
-            if (found == arp_sources.end())
+            found = arp_sources_ip.find((inet_ntoa(*(in_addr *)arp->ar_sip)));
+            if (found == arp_sources_ip.end())
             {
-                arp_sources.insert((inet_ntoa(*(in_addr *)arp->ar_sip)));
+                arp_sources_ip.insert((inet_ntoa(*(in_addr *)arp->ar_sip)));
                 //printf(statement, address);
             }
 
             fprintf(stdout, "target IP address:");
             cout << inet_ntoa(*(in_addr *)arp->ar_tip) << endl;
-            found = arp_sources.find((inet_ntoa(*(in_addr *)arp->ar_tip)));
-            if (found == arp_sources.end())
+            found = arp_destinations_ip.find((inet_ntoa(*(in_addr *)arp->ar_tip)));
+            if (found == arp_destinations_ip.end())
             {
-                arp_sources.insert((inet_ntoa(*(in_addr *)arp->ar_tip)));
+                arp_destinations_ip.insert((inet_ntoa(*(in_addr *)arp->ar_tip)));
                 //printf(statement, address);
             }
         }
@@ -160,35 +160,35 @@ void my_callback(u_char *useless, const struct pcap_pkthdr *pkthdr, const u_char
             //reply 4 fields
             fprintf(stdout, "sender hardware(MAC) address:");
             cout << ether_ntoa((ether_addr *)arp->ar_sha) << endl;
-            found = mac_address.find((ether_ntoa((ether_addr *)arp->ar_sha)));
-            if (found == arp_sources.end())
+            found = arp_sources_mac.find((ether_ntoa((ether_addr *)arp->ar_sha)));
+            if (found == arp_sources_mac.end())
             {
-                arp_sources.insert((ether_ntoa((ether_addr *)arp->ar_sha)));
+                arp_sources_mac.insert((ether_ntoa((ether_addr *)arp->ar_sha)));
                 //printf(statement, address);
             }
             fprintf(stdout, "sender IP address:");
             cout << inet_ntoa(*(in_addr *)arp->ar_sip) << endl;
-            found = arp_sources.find((inet_ntoa(*(in_addr *)arp->ar_sip)));
-            if (found == arp_sources.end())
+            found = arp_sources_ip.find((inet_ntoa(*(in_addr *)arp->ar_sip)));
+            if (found == arp_sources_ip.end())
             {
-                arp_sources.insert((inet_ntoa(*(in_addr *)arp->ar_sip)));
+                arp_sources_ip.insert((inet_ntoa(*(in_addr *)arp->ar_sip)));
                 //printf(statement, address);
             }
 
             fprintf(stdout, "target hardware(MAC) address:");
             cout << ether_ntoa((ether_addr *)arp->ar_tha) << endl;
-            found = mac_address.find((ether_ntoa((ether_addr *)arp->ar_tha)));
-            if (found == arp_sources.end())
+            found = arp_destinations_mac.find((ether_ntoa((ether_addr *)arp->ar_tha)));
+            if (found == arp_destinations_mac.end())
             {
-                arp_sources.insert((ether_ntoa((ether_addr *)arp->ar_tha)));
+                arp_destinations_mac.insert((ether_ntoa((ether_addr *)arp->ar_tha)));
                 //printf(statement, address);
             }
             fprintf(stdout, "target IP address:");
             cout << inet_ntoa(*(in_addr *)arp->ar_tip) << endl;
-            found = arp_sources.find((inet_ntoa(*(in_addr *)arp->ar_tip)));
-            if (found == ip_destinations.end())
+            found = arp_destinations_ip.find((inet_ntoa(*(in_addr *)arp->ar_tip)));
+            if (found == arp_destinations_ip.end())
             {
-                arp_sources.insert((inet_ntoa(*(in_addr *)arp->ar_tip)));
+                arp_destinations_ip.insert((inet_ntoa(*(in_addr *)arp->ar_tip)));
                 //printf(statement, address);
             }
         }
@@ -318,9 +318,10 @@ int main(int argc, char **argv)
     fprintf(stdout, "There are: %d unique ether destinations\n", ether_destinations.size());
     fprintf(stdout, "There are: %d unique IP sources\n", ip_sources.size());
     fprintf(stdout, "There are: %d unique IP destinations\n", ip_destinations.size());
-    fprintf(stdout, "There are %d unique ARP sources\n", arp_sources.size());
-    fprintf(stdout, "There are %d unique ARP destinations\n", arp_destinations.size());
-
+    fprintf(stdout, "There are %d unique ARP mac sources\n", arp_sources_mac.size());
+    fprintf(stdout, "There are %d unique ARP mac destinations\n", arp_destinations_mac.size());
+    fprintf(stdout, "There are %d unique ARP mac sources\n", arp_sources_ip.size());
+    fprintf(stdout, "There are %d unique ARP mac destinations\n", arp_destinations_ip.size());
     /*  for(int y=0;y<ip_sources.size();y++){
         cout<<ip_sources.
     } */
