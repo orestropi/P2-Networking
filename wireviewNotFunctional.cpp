@@ -325,19 +325,19 @@ int main(int argc, char **argv)
         {.tv_sec = elapsedSec, .tv_usec = elapsedMSec};
     printf("Duration of the packet capture in seconds: %ld.%06ld\n", time_ourval.tv_sec, time_ourval.tv_usec);
     //Printing total number of packets
-    fprintf(stdout, "\nThere are: %d unique ethernet sources\n", ether_sources.size());
+    fprintf(stdout, "\n\nThere are: %d unique ethernet sources\n", ether_sources.size());
     print(ether_sources);
-    fprintf(stdout, "\nThere are: %d unique ether destinations\n", ether_destinations.size());
+    fprintf(stdout, "\n\nThere are: %d unique ether destinations\n", ether_destinations.size());
     print(ether_destinations);
-    fprintf(stdout, "\nThere are: %d unique IP sources\n", ip_sources.size());
+    fprintf(stdout, "\n\nThere are: %d unique IP sources\n", ip_sources.size());
     print(ip_sources);
-    fprintf(stdout, "\nThere are: %d unique IP destinations\n", ip_destinations.size());
+    fprintf(stdout, "\n\nThere are: %d unique IP destinations\n", ip_destinations.size());
     print(ip_destinations);
-    fprintf(stdout, "\nThere are %d unique ARP mac sources\n", arp_sources_mac.size());
+    fprintf(stdout, "\n\nThere are %d unique ARP mac sources\n", arp_sources_mac.size());
     print(arp_sources_mac);
-    fprintf(stdout, "\nThere are %d unique ARP mac destinations\n", arp_destinations_mac.size());
+    fprintf(stdout, "\n\nThere are %d unique ARP mac destinations\n", arp_destinations_mac.size());
     print(arp_destinations_mac);
-    fprintf(stdout, "\nThere are %d unique ARP ip sources\n", arp_sources_ip.size());
+    fprintf(stdout, "\n\nThere are %d unique ARP ip sources\n", arp_sources_ip.size());
     print(arp_sources_ip);
     fprintf(stdout, "\nThere are %d unique ARP ip destinations\n", arp_destinations_ip.size());
     print(arp_destinations_ip);
