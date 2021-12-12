@@ -1,6 +1,7 @@
 
-all:wireviewNotFunctional.o
-	g++ wireviewNotFunctional.cpp -o wireviewNotFunctional -lpcap
+all:wireview.o wireviewProofOfCorrectParsing.o
+	g++ wireview.cpp -o wireview -lpcap
+	g++ wireviewProofOfCorrectParsing.cpp -o wireviewProofOfCorrectParsing -lpcap
 
 clean:
-	$(RM) wireviewNotFunctional wireviewNotFunctional.o
+	$(RM) wireview wireview.o wireviewProofOfCorrectParsing wireviewProofOfCorrectParsing.o
