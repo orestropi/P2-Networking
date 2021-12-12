@@ -344,7 +344,7 @@ int main(int argc, char **argv)
     /*  for(int y=0;y<ip_sources.size();y++){
         cout<<ip_sources.
     } */
-    fprintf(stdout, "Total Packets Processed: %d, ", count);
+    fprintf(stdout, "\n\nTotal Packets Processed: %d, ", count);
     fprintf(stdout, "\nDone processing packets... wheew!\n");
 
     //Ethernet parsing
