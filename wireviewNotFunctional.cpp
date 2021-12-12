@@ -70,8 +70,8 @@ struct myarphdr
 
 void print(std::unordered_set<string> const &s)
 {
+    std::cout <<"Here they all are: "<<"\n";
     for (auto const &i: s) {
-        std::cout <<"Here they all are: "<<"\n";
         std::cout << i << ", ";
     }
 }
