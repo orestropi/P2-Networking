@@ -38,8 +38,8 @@ const u_char *packet;
 struct pcap_pkthdr hdr;    /* pcap.h */
 struct ether_header *eptr; /* c */
 u_char **des_adds;
-unordered_set<char*> ether_sources;
-unordered_set<char*> ether_destinations;
+unordered_set<string> ether_sources;
+unordered_set<string> ether_destinations;
 unordered_set<char*> ip_sources;
 unordered_set<char*> ip_destinations;
 unordered_set<char*> arp_sources;
