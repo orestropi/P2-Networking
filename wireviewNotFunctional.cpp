@@ -40,14 +40,14 @@ struct ether_header *eptr; /* c */
 u_char **des_adds;
 unordered_set<string> ether_sources;
 unordered_set<string> ether_destinations;
-unordered_set<char*> ip_sources;
-unordered_set<char*> ip_destinations;
-unordered_set<char*> arp_sources;
-unordered_set<char*> arp_destinations;
-unordered_set<char*> mac_address;
-unordered_set<char*> associated_ip;
-unordered_set<char*> udp_source;
-unordered_set<char*> udp_destination;
+unordered_set<string> ip_sources;
+unordered_set<string> ip_destinations;
+unordered_set<string> arp_sources;
+unordered_set<string> arp_destinations;
+unordered_set<string> mac_address;
+unordered_set<string> associated_ip;
+unordered_set<string> udp_source;
+unordered_set<string> udp_destination;
 /* std::map<int, const u_char> packets;
 map<int, int> lens; */
 //derived from linux kernal header if_arp.h
@@ -87,7 +87,7 @@ void my_callback(u_char *useless, const struct pcap_pkthdr *pkthdr, const u_char
         //printf(statement, address);
     }
 
-    /*if (ntohs(eptr->ether_type) == ETHERTYPE_IP)
+    if (ntohs(eptr->ether_type) == ETHERTYPE_IP)
     {
         const struct ip *ip = (struct ip *)(packet + sizeof(struct ether_header));
         fprintf(stdout, "IP source: %s ",
@@ -210,9 +210,9 @@ void my_callback(u_char *useless, const struct pcap_pkthdr *pkthdr, const u_char
             sourceIPAddress = arp_header->ar_sip;
             targetMacAddress = arp_header->ar_tha;
             targetIPAddress = arp_header->ar_tip;
-        } 
+        } */
         //Check if source or target are unique in a map struct...
-    }*/
+    }
 
     //if first packet get timestamp
     if (count == 0)
@@ -317,6 +317,10 @@ int main(int argc, char **argv)
     //Printing total number of packets
     fprintf(stdout, "There are: %d unique ethernet sources\n", ether_sources.size());
     fprintf(stdout, "There are: %d unique ether destinations\n", ether_destinations.size());
+    fprintf(stdout, "There are: %d unique IP sources\n", ip_sources.size());
+    fprintf(stdout, "There are: %d unique IP destinations\n", ip_destinations.size());
+    fprintf(stdout, "There are %d unique ARP sources\n", arp_sources.size());
+    fprintf(stdout, "There are %d unique ARP destinations\n", arp_destinations.size());
 
     /*  for(int y=0;y<ip_sources.size();y++){
         cout<<ip_sources.
