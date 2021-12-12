@@ -345,7 +345,7 @@ int main(int argc, char **argv)
     //Printing total number of packets
     fprintf(stdout, "\n\nThere are: %d unique ethernet sources\n", ether_sources.size());
     print(ether_sources);
-    fprintf(stdout, "\n\nThere are: %d unique ether destinations\n", ether_destinations.size());
+    fprintf(stdout, "\n\nThere are: %d unique ethernet destinations\n", ether_destinations.size());
     print(ether_destinations);
     fprintf(stdout, "\n\nThere are: %d unique IP sources\n", ip_sources.size());
     print(ip_sources);
