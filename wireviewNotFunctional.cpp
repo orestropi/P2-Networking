@@ -19,8 +19,7 @@
 #include <netinet/udp.h>
 //#include <net/if_arp.h>
 #include <arpa/inet.h>
-#include <algorithm>
-#include <iterator>
+
 using namespace std;
 time_t rtime;
 suseconds_t rtimems;
@@ -71,10 +70,11 @@ struct myarphdr
 
 void print(std::unordered_set<string> const &s)
 {
-    std::copy(s.begin(),
-            s.end(),
-            std::ostream_iterator<string>(std::cout, " "));
+    for (auto const &i: s) {
+        std::cout << i << " ";
+    }
 }
+ 
  
 
 /* callback function that is passed to pcap_loop(..) and called each time 
