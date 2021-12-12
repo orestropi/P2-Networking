@@ -87,7 +87,7 @@ void my_callback(u_char *useless, const struct pcap_pkthdr *pkthdr, const u_char
         //printf(statement, address);
     }
 
-    if (ntohs(eptr->ether_type) == ETHERTYPE_IP)
+    /*if (ntohs(eptr->ether_type) == ETHERTYPE_IP)
     {
         const struct ip *ip = (struct ip *)(packet + sizeof(struct ether_header));
         fprintf(stdout, "IP source: %s ",
@@ -210,9 +210,9 @@ void my_callback(u_char *useless, const struct pcap_pkthdr *pkthdr, const u_char
             sourceIPAddress = arp_header->ar_sip;
             targetMacAddress = arp_header->ar_tha;
             targetIPAddress = arp_header->ar_tip;
-        } */
+        } 
         //Check if source or target are unique in a map struct...
-    }
+    }*/
 
     //if first packet get timestamp
     if (count == 0)
@@ -317,10 +317,6 @@ int main(int argc, char **argv)
     //Printing total number of packets
     fprintf(stdout, "There are: %d unique ethernet sources\n", ether_sources.size());
     fprintf(stdout, "There are: %d unique ether destinations\n", ether_destinations.size());
-    fprintf(stdout, "There are: %d unique IP sources\n", ip_sources.size());
-    fprintf(stdout, "There are: %d unique IP destinations\n", ip_destinations.size());
-    fprintf(stdout, "There are %d unique ARP sources\n", arp_sources.size());
-    fprintf(stdout, "There are %d unique ARP destinations\n", arp_destinations.size());
 
     /*  for(int y=0;y<ip_sources.size();y++){
         cout<<ip_sources.
