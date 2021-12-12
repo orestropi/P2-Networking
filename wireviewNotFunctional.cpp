@@ -71,7 +71,8 @@ struct myarphdr
 void print(std::unordered_set<string> const &s)
 {
     for (auto const &i: s) {
-        std::cout << i << " ";
+        std::cout <<"Here they all are: "<<"\n";
+        std::cout << i << ", ";
     }
 }
  
@@ -327,12 +328,19 @@ int main(int argc, char **argv)
     fprintf(stdout, "There are: %d unique ethernet sources\n", ether_sources.size());
     print(ether_sources);
     fprintf(stdout, "There are: %d unique ether destinations\n", ether_destinations.size());
+    print(ether_destinations);
     fprintf(stdout, "There are: %d unique IP sources\n", ip_sources.size());
+    print(ip_sources);
     fprintf(stdout, "There are: %d unique IP destinations\n", ip_destinations.size());
+    print(ip_destinations);
     fprintf(stdout, "There are %d unique ARP mac sources\n", arp_sources_mac.size());
+    print(arp_sources_mac);
     fprintf(stdout, "There are %d unique ARP mac destinations\n", arp_destinations_mac.size());
+    print(arp_destinations_mac);
     fprintf(stdout, "There are %d unique ARP ip sources\n", arp_sources_ip.size());
+    print(arp_sources_ip);
     fprintf(stdout, "There are %d unique ARP ip destinations\n", arp_destinations_ip.size());
+    print(arp_destinations_ip);
     /*  for(int y=0;y<ip_sources.size();y++){
         cout<<ip_sources.
     } */
