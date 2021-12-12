@@ -74,14 +74,13 @@ void my_callback(u_char *useless, const struct pcap_pkthdr *pkthdr, const u_char
     //ethernet parsing
     eptr = (struct ether_header *)packet;
     fprintf(stdout, "Ethernet Source: %s", ether_ntoa((const struct ether_addr *)&eptr->ether_shost));
-    auto found = ether_sources.find(ether_ntoa((const struct ether_addr *)&eptr->ether_shost));
-    if (!(found != ether_sources.end()))
+    if (!(ether_sources.find(ether_ntoa((const struct ether_addr *)&eptr->ether_shost)) != ether_sources.end()))
     {
         ether_sources.insert(ether_ntoa((const struct ether_addr *)&eptr->ether_shost));
         //printf(statement, address);
     }
     fprintf(stdout, "Ethernet Destination: %s ", ether_ntoa((const struct ether_addr *)&eptr->ether_dhost));
-    found = ether_destinations.find(ether_ntoa((const struct ether_addr *)&eptr->ether_dhost));
+    auto found = ether_destinations.find(ether_ntoa((const struct ether_addr *)&eptr->ether_dhost));
     if (found == ether_destinations.end())
     {
         ether_destinations.insert(ether_ntoa((const struct ether_addr *)&eptr->ether_dhost));
