@@ -19,6 +19,8 @@
 #include <netinet/udp.h>
 //#include <net/if_arp.h>
 #include <arpa/inet.h>
+#include <algorithm>
+#include <iterator>
 using namespace std;
 time_t rtime;
 suseconds_t rtimems;
@@ -66,6 +68,14 @@ struct myarphdr
     unsigned char ar_tha[ETH_ALEN]; /* target hardware address	*/
     unsigned char ar_tip[4];        /* target IP address		*/
 };
+
+void print(std::unordered_set<string> const &s)
+{
+    std::copy(s.begin(),
+            s.end(),
+            std::ostream_iterator<string>(std::cout, " "));
+}
+ 
 
 /* callback function that is passed to pcap_loop(..) and called each time 
  * a packet is recieved                                                    */
@@ -315,13 +325,14 @@ int main(int argc, char **argv)
     printf("Duration of the packet capture in seconds: %ld.%06ld\n", time_ourval.tv_sec, time_ourval.tv_usec);
     //Printing total number of packets
     fprintf(stdout, "There are: %d unique ethernet sources\n", ether_sources.size());
+    print(ether_sources);
     fprintf(stdout, "There are: %d unique ether destinations\n", ether_destinations.size());
     fprintf(stdout, "There are: %d unique IP sources\n", ip_sources.size());
     fprintf(stdout, "There are: %d unique IP destinations\n", ip_destinations.size());
     fprintf(stdout, "There are %d unique ARP mac sources\n", arp_sources_mac.size());
     fprintf(stdout, "There are %d unique ARP mac destinations\n", arp_destinations_mac.size());
-    fprintf(stdout, "There are %d unique ARP mac sources\n", arp_sources_ip.size());
-    fprintf(stdout, "There are %d unique ARP mac destinations\n", arp_destinations_ip.size());
+    fprintf(stdout, "There are %d unique ARP ip sources\n", arp_sources_ip.size());
+    fprintf(stdout, "There are %d unique ARP ip destinations\n", arp_destinations_ip.size());
     /*  for(int y=0;y<ip_sources.size();y++){
         cout<<ip_sources.
     } */
