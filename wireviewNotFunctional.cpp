@@ -139,7 +139,7 @@ void my_callback(u_char *useless, const struct pcap_pkthdr *pkthdr, const u_char
         {
             //request 3 fields
             //fprintf(stdout, "sender hardware(MAC) address:");
-            cout << ether_ntoa((ether_addr *)arp->ar_sha) << endl;
+            //cout << ether_ntoa((ether_addr *)arp->ar_sha) << endl;
             found = arp_sources_mac.find((ether_ntoa((ether_addr *)arp->ar_sha)));
             if (found == arp_sources_mac.end())
             {
@@ -147,7 +147,7 @@ void my_callback(u_char *useless, const struct pcap_pkthdr *pkthdr, const u_char
                 //printf(statement, address);
             }
             //fprintf(stdout, "sender IP address:");
-            cout << inet_ntoa(*(in_addr *)arp->ar_sip) << endl;
+            //cout << inet_ntoa(*(in_addr *)arp->ar_sip) << endl;
             found = arp_sources_ip.find((inet_ntoa(*(in_addr *)arp->ar_sip)));
             if (found == arp_sources_ip.end())
             {
@@ -156,7 +156,7 @@ void my_callback(u_char *useless, const struct pcap_pkthdr *pkthdr, const u_char
             }
 
             //printf(stdout, "target IP address:");
-            cout << inet_ntoa(*(in_addr *)arp->ar_tip) << endl;
+            //cout << inet_ntoa(*(in_addr *)arp->ar_tip) << endl;
             found = arp_destinations_ip.find((inet_ntoa(*(in_addr *)arp->ar_tip)));
             if (found == arp_destinations_ip.end())
             {
@@ -170,7 +170,7 @@ void my_callback(u_char *useless, const struct pcap_pkthdr *pkthdr, const u_char
 
             //reply 4 fields
             //fprintf(stdout, "sender hardware(MAC) address:");
-            cout << ether_ntoa((ether_addr *)arp->ar_sha) << endl;
+            //cout << ether_ntoa((ether_addr *)arp->ar_sha) << endl;
             found = arp_sources_mac.find((ether_ntoa((ether_addr *)arp->ar_sha)));
             if (found == arp_sources_mac.end())
             {
@@ -178,7 +178,7 @@ void my_callback(u_char *useless, const struct pcap_pkthdr *pkthdr, const u_char
                 //printf(statement, address);
             }
             //fprintf(stdout, "sender IP address:");
-            cout << inet_ntoa(*(in_addr *)arp->ar_sip) << endl;
+            //cout << inet_ntoa(*(in_addr *)arp->ar_sip) << endl;
             found = arp_sources_ip.find((inet_ntoa(*(in_addr *)arp->ar_sip)));
             if (found == arp_sources_ip.end())
             {
@@ -187,7 +187,7 @@ void my_callback(u_char *useless, const struct pcap_pkthdr *pkthdr, const u_char
             }
 
             //fprintf(stdout, "target hardware(MAC) address:");
-            cout << ether_ntoa((ether_addr *)arp->ar_tha) << endl;
+            //cout << ether_ntoa((ether_addr *)arp->ar_tha) << endl;
             found = arp_destinations_mac.find((ether_ntoa((ether_addr *)arp->ar_tha)));
             if (found == arp_destinations_mac.end())
             {
@@ -195,7 +195,7 @@ void my_callback(u_char *useless, const struct pcap_pkthdr *pkthdr, const u_char
                 //printf(statement, address);
             }
             //fprintf(stdout, "target IP address:");
-            cout << inet_ntoa(*(in_addr *)arp->ar_tip) << endl;
+            //cout << inet_ntoa(*(in_addr *)arp->ar_tip) << endl;
             found = arp_destinations_ip.find((inet_ntoa(*(in_addr *)arp->ar_tip)));
             if (found == arp_destinations_ip.end())
             {
@@ -227,7 +227,7 @@ void my_callback(u_char *useless, const struct pcap_pkthdr *pkthdr, const u_char
     //if first packet get timestamp
     if (count == 0)
     {
-        fprintf(stdout, "Time Stamp: %d, ", pkthdr->ts.tv_sec);
+        fprintf(stdout, "Time Stamp: ");
         rtime = (time_t)pkthdr->ts.tv_sec;
         rtimems = (suseconds_t)pkthdr->ts.tv_usec;
         struct tm rstime;
