@@ -47,8 +47,8 @@ unordered_set<string> arp_sources_mac;
 unordered_set<string> arp_destinations_mac;
 unordered_set<string> arp_sources_ip;
 unordered_set<string> arp_destinations_ip;
-unordered_set<string> udp_source;
-unordered_set<string> udp_destination;
+unordered_set<uint16_t> udp_source;
+unordered_set<uint16_t> udp_destination;
 /* std::map<int, const u_char> packets;
 map<int, int> lens; */
 //derived from linux kernal header if_arp.h
@@ -76,7 +76,13 @@ void print(std::unordered_set<string> const &s)
     }
 }
  
- 
+void printForInt(std::unordered_set<uint16_t> const &s)
+{
+    std::cout <<"Here they all are: "<<"\n";
+    for (auto const &i: s) {
+        std::cout << i << ", ";
+    }
+}
 
 /* callback function that is passed to pcap_loop(..) and called each time 
  * a packet is recieved                                                    */
@@ -125,6 +131,18 @@ void my_callback(u_char *useless, const struct pcap_pkthdr *pkthdr, const u_char
         {
             const struct udphdr *udp = (struct udphdr *)(packet + sizeof(struct ether_header) + sizeof(struct ip));
             //get ports for UDP
+            auto found2 = udp_source.find(ntohs(udp->uh_sport));
+        if (found2 == udp_source.end())
+        {
+            udp_source.insert(ntohs(udp->uh_sport));
+            //printf(statement, address);
+        }
+            found2 = udp_destination.find(ntohs(udp->uh_dport));
+        if (found2 == udp_destination.end())
+        {
+            udp_destination.insert(ntohs(udp->uh_dport));
+            //printf(statement, address);
+        }
             // fprintf(stdout, "Source port:");
             // cout << ntohs(udp->uh_sport) << endl;
             // fprintf(stdout, "Destination port:");
@@ -333,6 +351,10 @@ int main(int argc, char **argv)
     print(ip_sources);
     fprintf(stdout, "\n\nThere are: %d unique IP destinations\n", ip_destinations.size());
     print(ip_destinations);
+    fprintf(stdout, "\n\nThere are: %d unique UDP port sources\n", udp_source.size());
+    printForInt(udp_source);
+    fprintf(stdout, "\n\nThere are: %d unique UDP port destinations\n", udp_destination.size());
+    printForInt(udp_destination);
     fprintf(stdout, "\n\nThere are %d unique ARP mac sources\n", arp_sources_mac.size());
     print(arp_sources_mac);
     fprintf(stdout, "\n\nThere are %d unique ARP mac destinations\n", arp_destinations_mac.size());
