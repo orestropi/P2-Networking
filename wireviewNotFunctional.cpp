@@ -10,7 +10,7 @@
 #include <netinet/if_ether.h>
 #include <time.h>
 #include <map>
-#include <set>
+#include <unordered_set>
 //#include <linux/ip.h>
 #include <linux/if_ether.h>
 //#include <net/if_ethernet.h>
@@ -38,16 +38,16 @@ const u_char *packet;
 struct pcap_pkthdr hdr;    /* pcap.h */
 struct ether_header *eptr; /* c */
 u_char **des_adds;
-set<char*> ether_sources;
-set<char*> ether_destinations;
-set<char*> ip_sources;
-set<char*> ip_destinations;
-set<char*> arp_sources;
-set<char*> arp_destinations;
-set<char*> mac_address;
-set<char*> associated_ip;
-set<char*> udp_source;
-set<char*> udp_destination;
+unordered_set<char*> ether_sources;
+unordered_set<char*> ether_destinations;
+unordered_set<char*> ip_sources;
+unordered_set<char*> ip_destinations;
+unordered_set<char*> arp_sources;
+unordered_set<char*> arp_destinations;
+unordered_set<char*> mac_address;
+unordered_set<char*> associated_ip;
+unordered_set<char*> udp_source;
+unordered_set<char*> udp_destination;
 /* std::map<int, const u_char> packets;
 map<int, int> lens; */
 //derived from linux kernal header if_arp.h
