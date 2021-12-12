@@ -84,11 +84,13 @@ void my_callback(u_char *useless, const struct pcap_pkthdr *pkthdr, const u_char
 {
     //ethernet parsing
     eptr = (struct ether_header *)packet;
+    //fprintf(stdout, "Ethernet Source: %s", ether_ntoa((const struct ether_addr *)&eptr->ether_shost));
     if (!(ether_sources.find(ether_ntoa((const struct ether_addr *)&eptr->ether_shost)) != ether_sources.end()))
     {
         ether_sources.insert(ether_ntoa((const struct ether_addr *)&eptr->ether_shost));
         //printf(statement, address);
     }
+    //fprintf(stdout, "Ethernet Destination: %s ", ether_ntoa((const struct ether_addr *)&eptr->ether_dhost));
     auto found = ether_destinations.find(ether_ntoa((const struct ether_addr *)&eptr->ether_dhost));
     if (found == ether_destinations.end())
     {
@@ -99,6 +101,11 @@ void my_callback(u_char *useless, const struct pcap_pkthdr *pkthdr, const u_char
     if (ntohs(eptr->ether_type) == ETHERTYPE_IP)
     {
         const struct ip *ip = (struct ip *)(packet + sizeof(struct ether_header));
+        //fprintf(stdout, "IP source: %s ",
+                //inet_ntoa(ip->ip_src));
+        //fprintf(stdout, "IP destintation: %s\n",
+                //inet_ntoa(ip->ip_dst));
+        //fprintf(stdout, "IP source address: IM IP!");
         found = ip_sources.find(inet_ntoa(ip->ip_src));
         if (found == ip_sources.end())
         {
@@ -118,6 +125,10 @@ void my_callback(u_char *useless, const struct pcap_pkthdr *pkthdr, const u_char
         {
             const struct udphdr *udp = (struct udphdr *)(packet + sizeof(struct ether_header) + sizeof(struct ip));
             //get ports for UDP
+            // fprintf(stdout, "Source port:");
+            // cout << ntohs(udp->uh_sport) << endl;
+            // fprintf(stdout, "Destination port:");
+            // cout << ntohs(udp->uh_dport) << endl;
         }
     }
     if (ntohs(eptr->ether_type) == ETHERTYPE_ARP)
@@ -127,6 +138,7 @@ void my_callback(u_char *useless, const struct pcap_pkthdr *pkthdr, const u_char
         if (arp->ar_op == htons(ARPOP_REQUEST))
         {
             //request 3 fields
+            //fprintf(stdout, "sender hardware(MAC) address:");
             cout << ether_ntoa((ether_addr *)arp->ar_sha) << endl;
             found = arp_sources_mac.find((ether_ntoa((ether_addr *)arp->ar_sha)));
             if (found == arp_sources_mac.end())
@@ -134,6 +146,7 @@ void my_callback(u_char *useless, const struct pcap_pkthdr *pkthdr, const u_char
                 arp_sources_mac.insert((ether_ntoa((ether_addr *)arp->ar_sha)));
                 //printf(statement, address);
             }
+            //fprintf(stdout, "sender IP address:");
             cout << inet_ntoa(*(in_addr *)arp->ar_sip) << endl;
             found = arp_sources_ip.find((inet_ntoa(*(in_addr *)arp->ar_sip)));
             if (found == arp_sources_ip.end())
@@ -141,6 +154,8 @@ void my_callback(u_char *useless, const struct pcap_pkthdr *pkthdr, const u_char
                 arp_sources_ip.insert((inet_ntoa(*(in_addr *)arp->ar_sip)));
                 //printf(statement, address);
             }
+
+            //printf(stdout, "target IP address:");
             cout << inet_ntoa(*(in_addr *)arp->ar_tip) << endl;
             found = arp_destinations_ip.find((inet_ntoa(*(in_addr *)arp->ar_tip)));
             if (found == arp_destinations_ip.end())
@@ -151,8 +166,10 @@ void my_callback(u_char *useless, const struct pcap_pkthdr *pkthdr, const u_char
         }
         else
         {
+            //fprintf(stdout, "IM an arp reply!");
 
             //reply 4 fields
+            //fprintf(stdout, "sender hardware(MAC) address:");
             cout << ether_ntoa((ether_addr *)arp->ar_sha) << endl;
             found = arp_sources_mac.find((ether_ntoa((ether_addr *)arp->ar_sha)));
             if (found == arp_sources_mac.end())
@@ -160,6 +177,7 @@ void my_callback(u_char *useless, const struct pcap_pkthdr *pkthdr, const u_char
                 arp_sources_mac.insert((ether_ntoa((ether_addr *)arp->ar_sha)));
                 //printf(statement, address);
             }
+            //fprintf(stdout, "sender IP address:");
             cout << inet_ntoa(*(in_addr *)arp->ar_sip) << endl;
             found = arp_sources_ip.find((inet_ntoa(*(in_addr *)arp->ar_sip)));
             if (found == arp_sources_ip.end())
@@ -168,6 +186,7 @@ void my_callback(u_char *useless, const struct pcap_pkthdr *pkthdr, const u_char
                 //printf(statement, address);
             }
 
+            //fprintf(stdout, "target hardware(MAC) address:");
             cout << ether_ntoa((ether_addr *)arp->ar_tha) << endl;
             found = arp_destinations_mac.find((ether_ntoa((ether_addr *)arp->ar_tha)));
             if (found == arp_destinations_mac.end())
@@ -175,6 +194,7 @@ void my_callback(u_char *useless, const struct pcap_pkthdr *pkthdr, const u_char
                 arp_destinations_mac.insert((ether_ntoa((ether_addr *)arp->ar_tha)));
                 //printf(statement, address);
             }
+            //fprintf(stdout, "target IP address:");
             cout << inet_ntoa(*(in_addr *)arp->ar_tip) << endl;
             found = arp_destinations_ip.find((inet_ntoa(*(in_addr *)arp->ar_tip)));
             if (found == arp_destinations_ip.end())
@@ -224,7 +244,7 @@ void my_callback(u_char *useless, const struct pcap_pkthdr *pkthdr, const u_char
     rtimemsLast = (time_t)pkthdr->ts.tv_usec;
     //count packets
     count++;
-    fprintf(stdout, "Hello World: %d, ", count);
+    //fprintf(stdout, "Hello World: %d, ", count);
     fflush(stdout);
 /*     packets.insert(std::pair<int, const u_char>(count, *packet));
  */}
