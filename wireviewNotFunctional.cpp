@@ -75,7 +75,7 @@ void my_callback(u_char *useless, const struct pcap_pkthdr *pkthdr, const u_char
     eptr = (struct ether_header *)packet;
     fprintf(stdout, "Ethernet Source: %s", ether_ntoa((const struct ether_addr *)&eptr->ether_shost));
     auto found = ether_sources.find(ether_ntoa((const struct ether_addr *)&eptr->ether_shost));
-    if (found == ether_sources.end())
+    if (!(found != ether_sources.end()))
     {
         ether_sources.insert(ether_ntoa((const struct ether_addr *)&eptr->ether_shost));
         //printf(statement, address);
